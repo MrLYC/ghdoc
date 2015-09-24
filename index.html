@@ -20,7 +20,7 @@
   <script id="toc-tpl" type="text/x-handlebars-template">
       <ul id="toc">
         {{#each toclist}}
-        <li class="toc-item"><a class="toc-lnk" href="{{url}}">{{name}}</a></li>
+        <li class="toc-item" id="toc_item_{{sha}}"><a class="toc-lnk" href="#{{path}}">{{name}}</a></li>
         {{/each}}
       </ul>
   </script>
@@ -32,7 +32,7 @@
   <header id="header"></header>
   <div id="main">
     <div id="toc-list">
-      <p>Loading...</p>
+      <p id="toc-loading">Loading...</p>
     </div>
     <div id="content">
       <article id="article" class="markdown-body"></article>

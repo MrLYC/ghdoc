@@ -4,6 +4,7 @@
     var md_converter = null;
     var doc_list = null;
     var dir_list = null;
+    var active_toc_item= null;
     
     var $toc_list = null;
     var $article_area = null;
@@ -35,6 +36,7 @@
                         type: item["type"],
                         size: item["size"],
                         path: item["path"],
+                        sha: item["sha"],
                     });
                 }
                 callback(toc_list);
@@ -53,6 +55,11 @@
         $title.text(item.name);
     }
     
+    function active_item(item) {
+        $(".active-toc-item").removeClass("active-toc-item");
+        $("#toc_item_" + item.sha).addClass("active-toc-item");
+    }
+    
     $(function init(){
         gh_api = [META.api, "repos", META.user, META.repo, "contents"].join("/");
         toc_tpl = Handlebars.compile($("#toc-tpl").html());
@@ -69,13 +76,15 @@
             for(var i in data){
                 var item = data[i];
                 if(item.name == META.default){
-                    fetch_doc(data[i])
+                    fetch_doc(item);
+                    active_toc_item = item;
                 }
                 if(item.type == "file" && item.name.endsWith(".md")){
                     doc_list.push(item);
                 }
             }
             render_toc(doc_list);
+            active_item(active_toc_item);
         });
     });
 })();
