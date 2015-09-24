@@ -2,6 +2,8 @@
     var gh_api = null;
     var toc_tpl = null;
     var md_converter = null;
+    var doc_list = null;
+    var dir_list = null;
     
     var $toc_list = null;
     var $article_area = null;
@@ -30,6 +32,9 @@
                     toc_list.push({
                         name: item["name"],
                         url: item["download_url"],
+                        type: item["type"],
+                        size: item["size"],
+                        path: item["path"],
                     });
                 }
                 callback(toc_list);
@@ -59,13 +64,18 @@
     
         render_markdown($("#md-default").text());
         list_dir(META.directory, function(data) {
+            dir_list = data;
+            doc_list = [];
             for(var i in data){
-                if(data[i].name == META.default){
+                var item = data[i];
+                if(item.name == META.default){
                     fetch_doc(data[i])
-                    break;
+                }
+                if(item.type == "file" && item.name.endsWith(".md")){
+                    doc_list.push(item);
                 }
             }
-            render_toc(data);
+            render_toc(doc_list);
         });
     });
 })();
