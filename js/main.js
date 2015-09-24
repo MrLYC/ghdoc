@@ -38,7 +38,13 @@
     }
     
     function fetch_doc(item){
-        $.get(item.url, render_markdown);
+        $.get(item.url, function(data) {
+            render_markdown(data);
+            var $h1 = $("#article > h1:eq(0)");
+            if($h1.length > 0){
+                $title.text($h1.text());
+            }
+        });
         $title.text(item.name);
     }
     
@@ -52,6 +58,14 @@
         $title = $("title");
     
         render_markdown($("#md-default").text());
-        list_dir(META.directory, render_toc);
+        list_dir(META.directory, function(data) {
+            for(var i in data){
+                if(data[i].name == META.default){
+                    fetch_doc(data[i])
+                    break;
+                }
+            }
+            render_toc(data);
+        });
     });
 })();
