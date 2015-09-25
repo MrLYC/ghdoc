@@ -2,18 +2,30 @@
     var gh_api = null;
     var toc_tpl = null;
     var md_converter = null;
-    var doc_list = null;
-    var dir_list = null;
-    var active_toc_item= null;
+    var toc_map = null;
     
     var $toc_list = null;
     var $article_area = null;
     var $title = null;
 
     function render_toc(toc){
+        toc_map = {};
+        
+        for(var i in toc){
+            var item = toc[i];
+            toc_map[item.sha] = item;
+        }
+        
         $toc_list.html(toc_tpl({
             toclist: toc
         }));
+        
+        $(".toc-lnk").click(function(argument) {
+            var self = $(this);
+            var sha = self.data("sha");
+            var item = toc_map[sha];
+            active_item(item);
+        })
     }
     
     function render_markdown(text) {
@@ -30,15 +42,20 @@
                 var toc_list = [];
                 for(var i in data){
                     var item = data[i];
-                    toc_list.push({
-                        name: item["name"],
-                        url: item["download_url"],
-                        type: item["type"],
-                        size: item["size"],
-                        path: item["path"],
-                        sha: item["sha"],
-                    });
+                    if(item.type == "file" && item.name.endsWith(".md")){
+                        toc_list.push({
+                            name: item["name"],
+                            url: item["download_url"],
+                            type: item["type"],
+                            size: item["size"],
+                            path: item["path"],
+                            sha: item["sha"],
+                        });
+                    }
                 }
+                toc_list.sort(function(a, b) {
+                    return a > b;
+                })
                 callback(toc_list);
             }
         );
@@ -56,6 +73,7 @@
     }
     
     function active_item(item) {
+        fetch_doc(item);
         $(".active-toc-item").removeClass("active-toc-item");
         $("#toc_item_" + item.sha).addClass("active-toc-item");
     }
@@ -71,20 +89,19 @@
     
         render_markdown($("#md-default").text());
         list_dir(META.directory, function(data) {
-            dir_list = data;
-            doc_list = [];
+            var active_toc_item = null;
             for(var i in data){
                 var item = data[i];
                 if(item.name == META.default){
-                    fetch_doc(item);
                     active_toc_item = item;
-                }
-                if(item.type == "file" && item.name.endsWith(".md")){
-                    doc_list.push(item);
+                    break;
                 }
             }
-            render_toc(doc_list);
-            active_item(active_toc_item);
+            
+            render_toc(data);
+            if(active_toc_item != null){
+                $(".toc-lnk[data-sha=" + item.sha + "]").click();
+            }
         });
     });
 })();
