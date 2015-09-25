@@ -82,10 +82,10 @@
     }
     
     function active_item(item) {
+        $article_area.empty();
         fetch_doc(item);
         $(".active-toc-item").removeClass("active-toc-item");
         $("#toc_item_" + item.sha).addClass("active-toc-item");
-        $("#content").scrollTop(0);
     }
     
     $(function init(){
@@ -105,7 +105,7 @@
             var active_toc_item = data[0];
             for(var i in data){
                 var item = data[i];
-                if(item.name == META.default){
+                if(item.path == META.default){
                     data.splice(i, 1);
                     data.splice(0, 0, item);
                     if(selected.length == 0){
@@ -113,7 +113,7 @@
                         break;
                     }
                 }
-                if(selected.length > 1 && item.name == selected){
+                if(selected.length > 1 && item.path == selected){
                     active_toc_item = item;
                 }
             }
