@@ -102,7 +102,7 @@
         render_markdown($("#md-default").text());
         list_dir(META.directory, function(data) {
             var selected = document.location.hash.substr(1);
-            var active_toc_item = null;
+            var active_toc_item = data[0];
             for(var i in data){
                 var item = data[i];
                 if(item.name == META.default){
