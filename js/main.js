@@ -85,6 +85,7 @@
         fetch_doc(item);
         $(".active-toc-item").removeClass("active-toc-item");
         $("#toc_item_" + item.sha).addClass("active-toc-item");
+        $("#content").scrollTop(0);
     }
     
     $(function init(){
@@ -100,20 +101,26 @@
     
         render_markdown($("#md-default").text());
         list_dir(META.directory, function(data) {
+            var selected = document.location.hash.substr(1);
             var active_toc_item = null;
             for(var i in data){
                 var item = data[i];
                 if(item.name == META.default){
-                    active_toc_item = item;
                     data.splice(i, 1);
                     data.splice(0, 0, item);
-                    break;
+                    if(selected.length == 0){
+                        active_toc_item = item;
+                        break;
+                    }
+                }
+                if(selected.length > 1 && item.name == selected){
+                    active_toc_item = item;
                 }
             }
             
             render_toc(data);
             if(active_toc_item != null){
-                $(".toc-lnk[data-sha=" + item.sha + "]").click();
+                $(".toc-lnk[data-sha=" + active_toc_item.sha + "]").click();
             }
         });
     });
