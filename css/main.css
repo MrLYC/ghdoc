@@ -27,6 +27,7 @@ body {
     background-color: #fafafa;
 }
 
+
 #toc-loading {
     padding: 10px 15px;
 }
@@ -67,4 +68,26 @@ body {
 #article {
     width: 80%;
     padding: 10px 5%;
+}
+
+@media print {
+    html {
+        overflow: visible;
+    }
+    
+    .markdown-body pre code {
+        word-break: break-word;
+    }
+    
+    #toc-list {
+        display: none;
+    }
+    
+    #content {
+        position: inherit;
+    }
+    
+    #article {
+        margin: 0 auto;
+    }
 }
