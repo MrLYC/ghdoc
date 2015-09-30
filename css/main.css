@@ -72,7 +72,7 @@ body {
 
 @media print {
     html {
-        overflow: visible;
+        overflow: auto;
     }
     
     .markdown-body pre code {
@@ -85,6 +85,7 @@ body {
     
     #content {
         position: inherit;
+        overflow: visible;
     }
     
     #article {
