@@ -19,16 +19,18 @@
     };
   </script>
   <script id="toc-tpl" type="text/x-handlebars-template">
-      <ul id="toc">
-        {{#each toclist}}
-        <li class="toc-item" id="toc_item_{{sha}}">
-          <a class="toc-lnk" data-sha="{{sha}}" href="#{{path}}">{{name}}</a>
-        </li>
-        {{/each}}
-      </ul>
+    <ul id="toc">
+      {{#each toclist}}
+      <li class="toc-item" id="toc_item_{{sha}}">
+        <a class="toc-lnk" data-sha="{{sha}}" href="#{{path}}">{{name}}</a>
+      </li>
+      {{/each}}
+    </ul>
   </script>
-  <script id="md-default" type="text/markdown">
-
+  <script id="header-tpl" type="text/x-handlebars-template">
+    <nav id="navbar">
+      <div id="navbar-logo"><a href="https://github.com/{{meta.user}}/{{meta.repo}}" id="navbar-logo-lnk">{{meta.repo}}</a></div>
+    </nav>
   </script>
 </head>
 <body>

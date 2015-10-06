@@ -10,16 +10,46 @@ html {
 }
 
 body {
-    font-family: 'lucida grande','lucida sans unicode',lucida,helvetica,'Hiragino Sans GB','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif;
+    font-family: "Open Sans",Calibri,Candara,Arial,sans-serif,'Microsoft YaHei','WenQuanYi Micro Hei',sans-serif;
+    font-size: 15px;
+}
+
+#header {
+    height: 50px;
+    line-height: 50px;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+#navbar {
+    height: 100%;
+    padding: 0px 15px;
+    
+    background-color: #2d2d2d;
+    color: #cac8c8;
+}
+
+#navbar * {
+    display: inline-block;
+}
+
+#navbar-logo a{
+    font-size: 19px;
+    text-decoration: none;
+    
+    color: #ffffff;
+}
+
+#navbar-list {
+    margin-left: 15px;
 }
 
 #toc-list {
     position: absolute;
-    top: 0;
+    top: 50px;
     left: 0;
     bottom: 0;
     width: 25%;
-    height: 100%;
     overflow-x: auto;
     overflow-y: scroll;
     max-width: 300px;
@@ -56,12 +86,11 @@ body {
 
 #content {
     position: absolute;
-    top: 0;
+    top: 50px;
     left: 25%;
     bottom: 0;
     right: 0;
     width: auto;
-    height: 100%;
     overflow: auto;
 }
 
@@ -77,6 +106,10 @@ body {
     
     .markdown-body pre code {
         word-break: break-word;
+    }
+    
+    #header {
+        display: none;
     }
     
     #toc-list {

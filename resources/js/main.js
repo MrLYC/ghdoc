@@ -1,12 +1,16 @@
 (function(){
     var gh_api = null;
+    
     var toc_tpl = null;
+    var header_tpl = null;
+    
     var md_converter = null;
     var toc_map = null;
     
     var $toc_list = null;
     var $article_area = null;
     var $title = null;
+    var $header = null;
 
     function render_toc(toc){
         toc_map = {};
@@ -90,12 +94,20 @@
     
     $(function init(){
         gh_api = [META.api, "repos", META.user, META.repo, "contents"].join("/");
+        
         toc_tpl = Handlebars.compile($("#toc-tpl").html());
+        header_tpl = Handlebars.compile($("#header-tpl").html());
+        
         md_converter = new showdown.Converter();
     
         $toc_list = $("#toc-list");
         $article_area = $("#article");
         $title = $("title");
+        header = $("#header");
+        
+        header.html(header_tpl({
+            meta: META,
+        }));
         
         hljs.initHighlightingOnLoad();
     
