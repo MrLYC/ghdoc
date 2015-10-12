@@ -4,7 +4,6 @@
     var toc_tpl = null;
     var header_tpl = null;
     
-    var md_converter = null;
     var toc_map = null;
     
     var $toc_list = null;
@@ -33,7 +32,7 @@
     }
     
     function render_markdown(text) {
-        $article_area.html(md_converter.makeHtml(text));
+        $article_area.html(marked(text));
         var $pre_area = $article_area.find("pre");
         $pre_area.addClass("hljs");
         $pre_area.find("code").each(function(i, block) {
@@ -97,8 +96,6 @@
         
         toc_tpl = Handlebars.compile($("#toc-tpl").html());
         header_tpl = Handlebars.compile($("#header-tpl").html());
-        
-        md_converter = new showdown.Converter();
     
         $toc_list = $("#toc-list");
         $article_area = $("#article");
