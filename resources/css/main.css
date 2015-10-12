@@ -23,7 +23,7 @@ body {
 
 #navbar {
     height: 100%;
-    padding: 0px 15px;
+    padding: 0px 5px;
     
     background-color: #2d2d2d;
     color: #cac8c8;
@@ -34,10 +34,15 @@ body {
 }
 
 #navbar-logo a{
-    font-size: 19px;
+    font-size: 20px;
     text-decoration: none;
+    padding: 0px 5px;
     
     color: #ffffff;
+}
+
+#navbar-logo a:hover {
+    font-size: 21px;
 }
 
 #navbar-list {
