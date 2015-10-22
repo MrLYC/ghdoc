@@ -1,11 +1,11 @@
 (function(){
     var gh_api = null;
-    
+
     var toc_tpl = null;
     var header_tpl = null;
-    
+
     var toc_map = null;
-    
+
     var $toc_list = null;
     var $article_area = null;
     var $title = null;
@@ -13,16 +13,16 @@
 
     function render_toc(toc){
         toc_map = {};
-        
+
         for(var i in toc){
             var item = toc[i];
             toc_map[item.sha] = item;
         }
-        
+
         $toc_list.html(toc_tpl({
             toclist: toc
         }));
-        
+
         $(".toc-lnk").click(function(argument) {
             var self = $(this);
             var sha = self.data("sha");
@@ -30,7 +30,7 @@
             active_item(item);
         })
     }
-    
+
     function render_markdown(text) {
         $article_area.html(marked(text));
         var $pre_area = $article_area.find("pre");
@@ -43,7 +43,7 @@
             self.attr("id", escape(self.text()));
         });
     }
-    
+
     function list_dir(dir_name, callback) {
         if(typeof dir_name == "undefined"){
             dir_name = META.directory;
@@ -72,7 +72,7 @@
             }
         );
     }
-    
+
     function fetch_doc(item){
         $.get(item.url, function(data) {
             render_markdown(data);
@@ -83,31 +83,31 @@
         });
         $title.text(item.name);
     }
-    
+
     function active_item(item) {
         $article_area.empty();
         fetch_doc(item);
         $(".active-toc-item").removeClass("active-toc-item");
         $("#toc_item_" + item.sha).addClass("active-toc-item");
     }
-    
+
     $(function init(){
         gh_api = [META.api, "repos", META.user, META.repo, "contents"].join("/");
-        
+
         toc_tpl = Handlebars.compile($("#toc-tpl").html());
         header_tpl = Handlebars.compile($("#header-tpl").html());
-    
+
         $toc_list = $("#toc-list");
         $article_area = $("#article");
         $title = $("title");
         header = $("#header");
-        
+
         header.html(header_tpl({
             meta: META,
         }));
-        
+
         hljs.initHighlightingOnLoad();
-    
+
         render_markdown($("#md-default").text());
         list_dir(META.directory, function(data) {
             var selected = document.location.hash.substr(1);
@@ -126,7 +126,7 @@
                     active_toc_item = item;
                 }
             }
-            
+
             render_toc(data);
             if(active_toc_item != null){
                 $(".toc-lnk[data-sha=" + active_toc_item.sha + "]").click();
