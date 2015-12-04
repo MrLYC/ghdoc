@@ -1,0 +1,132 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: "Open Sans",Calibri,Candara,Arial,sans-serif,'Microsoft YaHei','WenQuanYi Micro Hei',sans-serif;
+    font-size: 15px;
+}
+
+#header {
+    height: 50px;
+    line-height: 50px;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+#navbar {
+    height: 100%;
+    padding: 0px 5px;
+    
+    background-color: #2d2d2d;
+    color: #cac8c8;
+}
+
+#navbar * {
+    display: inline-block;
+}
+
+#navbar-logo a{
+    font-size: 20px;
+    text-decoration: none;
+    padding: 0px 5px;
+    
+    color: #ffffff;
+}
+
+#navbar-logo a:hover {
+    font-size: 21px;
+}
+
+#navbar-list {
+    margin-left: 15px;
+}
+
+#toc-list {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    bottom: 0;
+    width: 25%;
+    overflow-x: auto;
+    overflow-y: scroll;
+    max-width: 300px;
+
+    background-color: #fafafa;
+}
+
+
+#toc-loading {
+    padding: 10px 15px;
+}
+
+#toc {
+    list-style: none;
+    padding: 0;
+}
+
+.toc-item {
+    padding: 10px 15px;
+}
+
+.active-toc-item {
+    background-color: #e3e6e8;
+}
+
+.toc-lnk {
+    text-decoration: none;
+    color: #364149;
+}
+
+.toc-lnk:hover {
+    color: #008cff;
+}
+
+#content {
+    position: absolute;
+    top: 50px;
+    left: 25%;
+    bottom: 0;
+    right: 0;
+    width: auto;
+    overflow: auto;
+}
+
+#article {
+    width: 80%;
+    padding: 10px 5%;
+}
+
+@media print {
+    html {
+        overflow: auto;
+    }
+    
+    .markdown-body pre code {
+        word-break: break-word;
+    }
+    
+    #header {
+        display: none;
+    }
+    
+    #toc-list {
+        display: none;
+    }
+    
+    #content {
+        position: inherit;
+        overflow: visible;
+    }
+    
+    #article {
+        margin: 0 auto;
+    }
+}

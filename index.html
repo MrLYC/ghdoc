@@ -6,29 +6,31 @@
   <title>Github document pages</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" type="text/css" />
-  <link rel="stylesheet" href="css/markdown.css" type="text/css" />
+  <link rel="stylesheet" href="resources/css/markdown.css" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/zenburn.min.css" type="text/css" />
-  <link rel="stylesheet" href="css/main.css" type="text/css" />
+  <link rel="stylesheet" href="resources/css/main.css" type="text/css" />
   <script type="text/javascript">
     var META = {
       api: "https://api.github.com",
       user: "MrLYC",
-      repo: "javascript-style-guide",
+      repo: "ghdoc-test",
       directory: "",
-      default: "README.md",
+      default: "markdown.md",
     };
   </script>
   <script id="toc-tpl" type="text/x-handlebars-template">
-      <ul id="toc">
-        {{#each toclist}}
-        <li class="toc-item" id="toc_item_{{sha}}">
-          <a class="toc-lnk" data-sha="{{sha}}" href="#{{path}}">{{name}}</a>
-        </li>
-        {{/each}}
-      </ul>
+    <ul id="toc">
+      {{#each toclist}}
+      <li class="toc-item" id="toc_item_{{sha}}">
+        <a class="toc-lnk" data-sha="{{sha}}" href="#{{path}}">{{name}}</a>
+      </li>
+      {{/each}}
+    </ul>
   </script>
-  <script id="md-default" type="text/markdown">
-
+  <script id="header-tpl" type="text/x-handlebars-template">
+    <nav id="navbar">
+      <div id="navbar-logo"><a href="https://github.com/{{meta.user}}/{{meta.repo}}" id="navbar-logo-lnk">{{meta.repo}}</a></div>
+    </nav>
   </script>
 </head>
 <body>
@@ -44,8 +46,8 @@
   <footer id="footer"></footer>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.2/handlebars.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
-  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="resources/js/main.js"></script>
 </body>
 </html>
