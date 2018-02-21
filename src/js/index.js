@@ -5,6 +5,7 @@ main({
     user: "MrLYC",
     repo: "ghdoc-test",
     path: "",
-    fileList: "#file-list",
-    fileContent: "#file-content",
+    fileListEl: "#file-list",
+    fileContentEl: "#file-content",
+    headerEl: "#header",
 });

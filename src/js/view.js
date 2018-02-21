@@ -3,7 +3,7 @@ import util from "util"
 import ghAPI from "./github_api"
 import renderMarkdown from "./markdown"
 
-export function makeEventBus() {
+function makeEventBus() {
     return new Vue({
         data: {
             fileList: null,
@@ -26,7 +26,7 @@ export function makeEventBus() {
     });
 }
 
-export function makeFileListVue(el, api, bus) {
+function makeFileListVue(el, api, bus) {
     var vue = new Vue({
         el: el,
         data: {
@@ -68,7 +68,7 @@ export function makeFileListVue(el, api, bus) {
     return vue;
 }
 
-export function makeContentVue(el, api, bus) {
+function makeContentVue(el, api, bus) {
     var vue = new Vue({
         el: el,
         data: {
@@ -96,13 +96,21 @@ export function makeContentVue(el, api, bus) {
     return vue;
 }
 
+function makeHeaderVue(el, repo) {
+    return new Vue({
+        el: el,
+        data: {
+            repo: repo,
+        }
+    })
+}
+
 export default function main(config) {
+    var vHeader = makeHeaderVue(config.headerEl, config.repo);
     var api = new ghAPI(config);
-
     var vBus = makeEventBus();
-
-    var vFileList = makeFileListVue(config.fileList, api, vBus);
-    var vFileContent = makeContentVue(config.fileContent, api, vBus);
+    var vFileList = makeFileListVue(config.fileListEl, api, vBus);
+    var vFileContent = makeContentVue(config.fileContentEl, api, vBus);
 
     vBus.fileList = vFileList;
     vBus.fileContent = vFileContent;

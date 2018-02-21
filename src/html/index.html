@@ -5,7 +5,8 @@
     <title>Github doc</title>
 </head>
 <body>
-    <div id="file-list">
+    <header id="header">{{ repo }}</header>
+    <nav id="file-list">
         <ul>
             <li
                 class="file-item"
@@ -18,7 +19,7 @@
                 <div class="file-name">{{ file.name }}</div>
             </li>
         </ul>
-    </div>
+    </nav>
     <div id="file-content">
         <article id="markdown-body" v-html="content"></article>
     </div>

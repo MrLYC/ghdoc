@@ -1,0 +1,30 @@
+$contentTop : 32px;
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+#header {
+    position: absolute;
+    top: 0;
+    bottom: $contentTop;
+    width: 100%;
+    height: $contentTop;
+}
+
+#file-list {
+    position: fixed;
+    top: $contentTop;
+    bottom: 0;
+    left: 0;
+    width: 20%;
+}
+
+#file-content {
+    position: absolute;
+    top: $contentTop;
+    bottom: 0;
+    left: 20%;
+    width: 80%;
+}
