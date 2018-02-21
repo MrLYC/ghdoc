@@ -26,9 +26,21 @@ module.exports = {
     },
     module: {
         rules: [{
-            test: /\.s?css$/,
-            use: ["style-loader", "css-loader", "sass-loader"],
-        }]
+            test: /\.scss$/,
+            use: extractSass.extract({
+                use: [{
+                    loader: "css-loader",
+                }, {
+                    loader: "sass-loader",
+                    options: {
+                        includePaths: [
+                            path.resolve(__dirname, 'node_modules'),
+                        ],
+                    },
+                }],
+                fallback: "style-loader",
+            }),
+        }],
     },
     plugins: [
         new HtmlWebpackPlugin({
