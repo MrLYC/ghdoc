@@ -1,5 +1,7 @@
 import jquery from "jquery"
+import util from "util"
 
-export default function getRepo(callback) {
-    jquery.get("https://api.github.com/users/MrLYC/repos", callback);
+export function getRepoFiles(base, user, repo, path, callback) {
+    var url = util.format("%s/repos/%s/%s/contents/%s", base, user, repo, path);
+    jquery.get(url, callback);
 }

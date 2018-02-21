@@ -2,43 +2,19 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Github Repos</title>
+    <title>Github doc</title>
 </head>
 <body>
     <div id="main">
         <ul>
-            <li class="repo-item" v-for="repo in repoList" :data-id="repo.id">
-                <div class="repo-name">
+            <li class="file-item" v-for="file in fileList" :data-id="file.id" :class="file.type">
+                <div class="file-name">
                     <span>Name</span>
-                    {{ repo.name }}
+                    {{ file.name }}
                 </div>
-                <div class="repo-description">
-                    <span>Description</span>
-                    {{ repo.description }}
-                </div>
-                <div class="repo-create-at">
-                    <span>Create at</span>
-                    {{ repo.created_at }}
-                </div>
-                <div class="repo-pushed-at">
-                    <span>Pushed at</span>
-                    {{ repo.pushed_at }}
-                </div>
-                <div class="repo-forks">
-                    <span>Forks</span>
-                    {{ repo.forks }}
-                </div>
-                <div class="repo-watchers">
-                    <span>Watchers</span>
-                    {{ repo.watchers }}
-                </div>
-                <div class="repo-open-issues">
-                    <span>Issues</span>
-                    {{ repo.open_issues }}
-                </div>
-                <div class="repo-url">
-                    <span>Home</span>
-                    <a :href="repo.url">{{ repo.url }}</a>
+                <div class="file-url">
+                    <span>Link</span>
+                    <a :href="file.download_url">{{ file.download_url }}</a>
                 </div>
             </li>
         </ul>

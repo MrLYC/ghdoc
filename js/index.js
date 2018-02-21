@@ -1,13 +1,11 @@
-import getRepo from "./github_api"
-import Vue from "vue"
+import main from "./view"
 
-var vue = new Vue({
-    el: "#main",
-    data: {
-        repoList: [],
-    },
-});
-
-getRepo((repoList) => {
-    vue.repoList = repoList;
+main("#main", {
+    base: "http://api.github.com",
+    user: "MrLYC",
+    repo: "ghdoc-test",
+    path: "",
+    contentAPI() {
+        return ;
+    }
 });
