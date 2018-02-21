@@ -2,22 +2,24 @@ DISTDIR := dist
 HTMLDIR := src/html
 JSDIR := src/js
 CSSDIR := src/css
+NPMENV := NODE_ENV=development
+NPM := env ${NPMENV} npm
 
 .PHONY: build
 build: ${DISTDIR}
-	npm run build
+	${NPM} run build
 
 ${DISTDIR}:
 	mkdir -p ${DISTDIR}
 
 .PHONY: init
 init:
-	npm install
+	${NPM} install
 
 .PHONY: build-dev
 build-dev:
-	npm run build-dev
+	${NPM} run build-dev
 
 .PHONY: dev-server
 dev-server:
-	npm run dev-server
+	${NPM} run dev-server
