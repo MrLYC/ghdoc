@@ -1,5 +1,7 @@
 import Vue from "vue"
+import util from "util"
 import ghAPI from "./github_api"
+import renderMarkdown from "./markdown"
 
 export function makeEventBus() {
     return new Vue({
@@ -85,7 +87,7 @@ export function makeContentVue(el, api, bus) {
                 }
 
                 this.api.getFileContent(this.file.download_url, (content) => {
-                    self.content = content;
+                    self.content = renderMarkdown(content);
                     self.bus.fileContentRefreshDone();
                 });
             }
