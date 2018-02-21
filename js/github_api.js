@@ -1,7 +1,16 @@
 import jquery from "jquery"
 import util from "util"
+import path from "path"
 
-export function getRepoFiles(base, user, repo, path, callback) {
-    var url = util.format("%s/repos/%s/%s/contents/%s", base, user, repo, path);
-    jquery.get(url, callback);
+export default function API(config) {
+    this.config = config;
+
+    this.getRepoFiles = function (callback) {
+        var url = util.format("%s/repos/%s/%s/contents/%s", config.base, config.user, config.repo, config.path);
+        jquery.get(url, callback);
+    }
+
+    this.getFileContent = function (url, callback) {
+        jquery.get(url, callback);
+    }
 }
