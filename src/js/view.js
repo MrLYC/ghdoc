@@ -26,7 +26,7 @@ function makeEventBus() {
     });
 }
 
-function makeFileListVue(el, api, bus) {
+function makeFileListVue(el, api, bus, config) {
     var vue = new Vue({
         el: el,
         data: {
@@ -34,6 +34,7 @@ function makeFileListVue(el, api, bus) {
             index: 0,
             api: api,
             bus: bus,
+            config: config,
         },
         computed: {
             currentItem() {
@@ -96,20 +97,10 @@ function makeContentVue(el, api, bus) {
     return vue;
 }
 
-function makeHeaderVue(el, repo) {
-    return new Vue({
-        el: el,
-        data: {
-            repo: repo,
-        }
-    })
-}
-
 export default function main(config) {
-    var vHeader = makeHeaderVue(config.headerEl, config.repo);
     var api = new ghAPI(config);
     var vBus = makeEventBus();
-    var vFileList = makeFileListVue(config.fileListEl, api, vBus);
+    var vFileList = makeFileListVue(config.fileListEl, api, vBus, config);
     var vFileContent = makeContentVue(config.fileContentEl, api, vBus);
 
     vBus.fileList = vFileList;

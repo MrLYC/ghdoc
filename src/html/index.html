@@ -5,23 +5,20 @@
     <title>Github doc</title>
 </head>
 <body>
-    <header id="header">{{ repo }}</header>
     <nav id="file-list">
-        <ul>
-            <li
-                class="file-item"
-                v-for="(file, index) in fileList"
-                :data-index="index"
-                :data-id="file.id"
-                :class="file.type"
-                @click="select(index)"
-            >
-                <div class="file-name">{{ file.name }}</div>
-            </li>
-        </ul>
+        <div>
+            <div id="repo-logo">{{ config.repo }}</div>
+            <ul class="content">
+                <li class="file-item" v-for="(file, index) in fileList" :data-index="index" :data-id="file.id" :class="file.type" @click="select(index)">
+                    <div class="file-name">{{ file.name }}</div>
+                </li>
+            </ul>
+        </div>
     </nav>
     <div id="file-content">
-        <article id="markdown-body" v-html="content"></article>
+        <div class="content">
+            <article id="markdown-body" v-html="content"></article>
+        </div>
     </div>
 </body>
 </html>
