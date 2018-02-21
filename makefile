@@ -1,7 +1,7 @@
 DISTDIR := dist
-HTMLDIR := html
-JSDIR := js
-CSSDIR := css
+HTMLDIR := src/html
+JSDIR := src/js
+CSSDIR := src/css
 
 .PHONY: build
 build: ${DISTDIR}
