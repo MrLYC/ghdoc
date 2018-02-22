@@ -11,7 +11,14 @@
     <nav id="file-list">
         <div>
             <ul class="content">
-                <li class="file-item" v-for="(file, index) in fileList" :data-index="index" :data-id="file.id" :class="file.type" @click="select(index)">
+                <li
+                    class="file-item"
+                    v-for="(file, idx) in fileList"
+                    :data-index="idx"
+                    :data-id="file.id"
+                    :class="{ active: idx == index }"
+                    @click="select(idx)"
+                >
                     <a class="file-name" href="#">{{ file.name | trimext }}</a>
                 </li>
                 <li class="file-item" v-show="fileList == null">
