@@ -14,8 +14,10 @@
     background-color: #2d2d2d;
 }
 
+$fileItemColor : #666666;
+
 #file-list {
-    color: #666666;
+    color: $fileItemColor;
     background-color: #fafafa;
     border-right: 1px solid #e3e6e8;
 
@@ -28,8 +30,14 @@
         list-style: none;
         padding: 5px;
 
-        :hover {
-            color: #008cff;
+        a.file-name {
+            text-decoration: none;
+            color: $fileItemColor;
+
+            :hover {
+                color: #008cff;
+            }
         }
     }
+
 }

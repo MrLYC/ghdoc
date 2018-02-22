@@ -1,7 +1,13 @@
 import Vue from "vue"
 import util from "util"
+import path from "path"
 import ghAPI from "./github_api"
 import renderMarkdown from "./markdown"
+
+
+Vue.filter("trimext", function (value) {
+    return path.basename(value, path.extname(value));
+});
 
 function makeEventBus() {
     return new Vue({
@@ -30,7 +36,7 @@ function makeFileListVue(el, api, bus) {
     var vue = new Vue({
         el: el,
         data: {
-            fileList: [],
+            fileList: null,
             index: 0,
             api: api,
             bus: bus,
@@ -56,6 +62,9 @@ function makeFileListVue(el, api, bus) {
                 });
             },
             select(index) {
+                if (this.index == index) {
+                    return;
+                }
                 this.index = index;
                 if (this.currentItem.type == "file") {
                     this.bus.fileListSelectedFile();

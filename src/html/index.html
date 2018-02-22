@@ -12,7 +12,10 @@
         <div>
             <ul class="content">
                 <li class="file-item" v-for="(file, index) in fileList" :data-index="index" :data-id="file.id" :class="file.type" @click="select(index)">
-                    <div class="file-name">{{ file.name }}</div>
+                    <a class="file-name" href="#">{{ file.name | trimext }}</a>
+                </li>
+                <li class="file-item" v-show="fileList == null">
+                    <div>Loading...</div>
                 </li>
             </ul>
         </div>
