@@ -20,6 +20,7 @@ $fileItemColor : #666666;
     color: $fileItemColor;
     background-color: #fafafa;
     border-right: 1px solid #e3e6e8;
+    overflow: auto;
 
     ul {
         padding: 0 5px;
