@@ -5,18 +5,19 @@
     font-family: 'lucida grande','lucida sans unicode',lucida,helvetica,'Hiragino Sans GB','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif;
 }
 
+#repo-logo {
+    height: $headerHeight;
+    line-height: $headerHeight;
+    font-size: 1.4em;
+    padding: 0 16px;
+    color: #cac8c8;
+    background-color: #2d2d2d;
+}
+
 #file-list {
     color: #666666;
     background-color: #fafafa;
     border-right: 1px solid #e3e6e8;
-
-    #repo-logo {
-        font-size: 1.4em;
-        padding: 2px 8px;
-        color: #cac8c8;
-        background-color: #2d2d2d;
-        text-align: center;
-    }
 
     ul {
         padding: 0 5px;
