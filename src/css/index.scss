@@ -1,6 +1,10 @@
 @import "./layout.scss";
 @import "./markdown.scss";
 
+* {
+    font-family: 'lucida grande','lucida sans unicode',lucida,helvetica,'Hiragino Sans GB','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif;
+}
+
 #file-list {
     color: #666666;
     background-color: #fafafa;
