@@ -23,8 +23,8 @@ $fileItemColor : #666666;
     overflow: auto;
 
     ul {
-        padding: 0 5px;
-        margin: 10px;
+        padding: 10px 5px;
+        margin: 0px;
     }
 
     li.file-item {
@@ -40,5 +40,10 @@ $fileItemColor : #666666;
             }
         }
     }
+}
 
+#file-content {
+    .content{
+        padding: 10px 10px;
+    }
 }

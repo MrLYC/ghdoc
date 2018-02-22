@@ -18,6 +18,8 @@ body {
     left: 0;
     width: 100%;
     height: $headerHeight;
+    padding: 0;
+    margin: 0;
     z-index: 100;
 }
 
@@ -27,6 +29,8 @@ body {
     bottom: 0;
     left: 0;
     width: $navWidth;
+    padding: 0;
+    margin: 0;
     z-index: 90;
 }
 
@@ -36,5 +40,7 @@ body {
     bottom: 0;
     left: $navWidth;
     width: $contentWidth;
+    padding: 0;
+    margin: 0;
     z-index: 80;
 }
