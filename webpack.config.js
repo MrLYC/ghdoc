@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const MinifyPlugin = require("babel-minify-webpack-plugin");
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const extractSass = new ExtractTextPlugin({
     filename: "style.[contenthash].css",
@@ -52,6 +53,7 @@ module.exports = {
             hash: true,
         }),
         new MinifyPlugin(),
+        new UglifyJsPlugin(),
         extractSass,
     ],
 };
