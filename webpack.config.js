@@ -9,6 +9,18 @@ const extractSass = new ExtractTextPlugin({
     disable: process.env.NODE_ENV === "development"
 });
 
+var plugins = [
+    new HtmlWebpackPlugin({
+        template: './src/html/index.html',
+        hash: true,
+    }),
+    extractSass,
+]
+if (process.env.NODE_ENV !== "development") {
+    plugins.push(new MinifyPlugin());
+    plugins.push(new UglifyJsPlugin());
+}
+
 module.exports = {
     entry: [
         './src/js/index.js',
@@ -47,13 +59,5 @@ module.exports = {
             }),
         }],
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './src/html/index.html',
-            hash: true,
-        }),
-        new MinifyPlugin(),
-        new UglifyJsPlugin(),
-        extractSass,
-    ],
+    plugins: plugins,
 };
