@@ -23,3 +23,7 @@ build-dev:
 .PHONY: dev-server
 dev-server:
 	${DEVNPM} run dev-server
+
+.PHONY: display-modules
+display-modules:
+	webpack --display-modules --sort-modules-by size
