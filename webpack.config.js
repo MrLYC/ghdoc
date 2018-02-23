@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 const extractSass = new ExtractTextPlugin({
     filename: "style.[contenthash].css",
@@ -30,6 +31,9 @@ module.exports = {
             use: extractSass.extract({
                 use: [{
                     loader: "css-loader",
+                    options: {
+                        minimize: true,
+                    },
                 }, {
                     loader: "sass-loader",
                     options: {
@@ -47,6 +51,7 @@ module.exports = {
             template: './src/html/index.html',
             hash: true,
         }),
+        new MinifyPlugin(),
         extractSass,
     ],
 };
