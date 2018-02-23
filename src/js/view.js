@@ -86,6 +86,11 @@ function makeContentVue(el, api, bus) {
             bus: bus,
             content: "",
         },
+        computed: {
+            renderedContent() {
+                return renderMarkdown(this.content);
+            },
+        },
         methods: {
             refresh(file) {
                 var self = this;
@@ -96,7 +101,7 @@ function makeContentVue(el, api, bus) {
                 }
 
                 this.api.getFileContent(this.file.download_url, (content) => {
-                    self.content = renderMarkdown(content);
+                    self.content = content;
                     self.bus.fileContentRefreshDone();
                 });
             }
