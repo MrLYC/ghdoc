@@ -20,6 +20,11 @@ function makeEventBus() {
             fileListRefreshDone() {
                 this.fileContent.refresh(this.fileList.currentItem);
             },
+            fileContentWillLoad(file, callback) {
+                if (file != null) {
+                    this.fileContent.load(file, callback);
+                }
+            },
             fileContentRefreshDone() {
 
             },
@@ -42,16 +47,11 @@ function makeFileListVue(config, api, bus) {
             index: 0,
             api: api,
             bus: bus,
+            preloading: false,
         },
         computed: {
             currentItem() {
-                if (this.fileList.length == 0) {
-                    return null;
-                }
-                if (this.index > this.fileList.length) {
-                    this.index = 0;
-                }
-                return this.fileList[this.index];
+                return this.getfileByIndex(this.index);
             },
         },
         methods: {
@@ -74,6 +74,28 @@ function makeFileListVue(config, api, bus) {
                     this.bus.fileListSelectedDir();
                 }
             },
+            preloadByIndex(index) {
+                if (this.preloading) {
+                    return;
+                }
+                var self = this;
+                var file = this.getfileByIndex(index);
+                if (file != null) {
+                    self.preloading = true;
+                    this.bus.fileContentWillLoad(file, function () {
+                        self.preloading = false;
+                    });
+                }
+            },
+            getfileByIndex(index) {
+                if (this.fileList.length == 0) {
+                    return null;
+                }
+                if (index > this.fileList.length) {
+                    return null;
+                }
+                return this.fileList[index];
+            }
         },
     });
     return vue;
@@ -91,6 +113,23 @@ function makeContentVue(config, api, bus) {
             content: "",
         },
         methods: {
+            load(file, callback) {
+                var self = this;
+                var url = file.download_url;
+                var loaded = function (content) {
+                    content = renderMarkdown(content);
+                    fileCache.set(url, content);
+                    if (callback != undefined) {
+                        callback(content);
+                    }
+                }
+                var content = fileCache.get(url);
+                if (content == undefined) {
+                    this.api.getFileContent(url, loaded);
+                } else {
+                    loaded(content);
+                }
+            },
             refresh(file) {
                 var self = this;
                 this.file = file;
@@ -99,20 +138,11 @@ function makeContentVue(config, api, bus) {
                     return;
                 }
 
-                var url = this.file.download_url;
-                var callback = function (content) {
-                    self.content = renderMarkdown(content);
-                    fileCache.set(url, self.content);
+                this.load(this.file, function (content) {
+                    self.content = content;
                     self.bus.fileContentRefreshDone();
-                }
-
-                var content = fileCache.get(url);
-                if (content == undefined) {
-                    this.api.getFileContent(url, callback);
-                } else {
-                    callback(content);
-                }
-            }
+                });
+            },
         }
     });
     return vue;
