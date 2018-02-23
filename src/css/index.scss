@@ -31,13 +31,13 @@ $fileItemColor : #666666;
         list-style: none;
         padding: 5px;
 
-        a.file-name {
+        .file-name {
             text-decoration: none;
             color: $fileItemColor;
+        }
 
-            :hover {
-                color: #008cff;
-            }
+        .file-name:hover {
+            color: #008cff;
         }
     }
 
