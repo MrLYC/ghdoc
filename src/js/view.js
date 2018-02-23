@@ -1,6 +1,7 @@
 import Vue from "vue"
 import util from "util"
 import path from "path"
+import lru from "lru-cache"
 import ghAPI from "./github_api"
 import renderMarkdown from "./markdown"
 
@@ -32,10 +33,11 @@ function makeEventBus() {
     });
 }
 
-function makeFileListVue(el, api, bus) {
+function makeFileListVue(config, api, bus) {
     var vue = new Vue({
-        el: el,
+        el: config.fileListEl,
         data: {
+            config: config,
             fileList: null,
             index: 0,
             api: api,
@@ -77,19 +79,16 @@ function makeFileListVue(el, api, bus) {
     return vue;
 }
 
-function makeContentVue(el, api, bus) {
+function makeContentVue(config, api, bus) {
+    var fileCache = lru(config.cacheSize);
     var vue = new Vue({
-        el: el,
+        el: config.fileContentEl,
         data: {
+            config: config,
             api: api,
             file: null,
             bus: bus,
             content: "",
-        },
-        computed: {
-            renderedContent() {
-                return renderMarkdown(this.content);
-            },
         },
         methods: {
             refresh(file) {
@@ -100,10 +99,19 @@ function makeContentVue(el, api, bus) {
                     return;
                 }
 
-                this.api.getFileContent(this.file.download_url, (content) => {
-                    self.content = content;
+                var url = this.file.download_url;
+                var callback = function (content) {
+                    self.content = renderMarkdown(content);
+                    fileCache.set(url, self.content);
                     self.bus.fileContentRefreshDone();
-                });
+                }
+
+                var content = fileCache.get(url);
+                if (content == undefined) {
+                    this.api.getFileContent(url, callback);
+                } else {
+                    callback(content);
+                }
             }
         }
     });
@@ -123,8 +131,8 @@ export default function main(config) {
     var vHeader = makeHeaderVue(config.headerEl, config);
     var api = new ghAPI(config);
     var vBus = makeEventBus();
-    var vFileList = makeFileListVue(config.fileListEl, api, vBus);
-    var vFileContent = makeContentVue(config.fileContentEl, api, vBus);
+    var vFileList = makeFileListVue(config, api, vBus);
+    var vFileContent = makeContentVue(config, api, vBus);
 
     vBus.fileList = vFileList;
     vBus.fileContent = vFileContent;
