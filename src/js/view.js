@@ -112,7 +112,6 @@ function makeContentVue(config, api, bus) {
                 var self = this;
                 var url = file.download_url;
                 var loaded = function (content) {
-                    content = renderMarkdown(content);
                     fileCache.set(url, content);
                     if (callback != undefined) {
                         callback(content);
@@ -120,7 +119,9 @@ function makeContentVue(config, api, bus) {
                 }
                 var content = fileCache.get(url);
                 if (content == undefined) {
-                    this.api.getFileContent(url, loaded);
+                    this.api.getFileContent(url, function (content) {
+                        loaded(renderMarkdown(content.trim()));
+                    });
                 } else {
                     loaded(content);
                 }
