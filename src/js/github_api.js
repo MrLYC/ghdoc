@@ -2,12 +2,12 @@ import util from "util"
 import path from "path"
 import ajaxGet from "./ajax"
 
-export default function API(config) {
+export default function API(meta) {
     var self = this;
-    self.config = config;
+    self.meta = meta;
 
     self.getRepoFiles = function (callback) {
-        var url = util.format("%s/repos/%s/%s/contents/%s", config.base, config.user, config.repo, config.path);
+        var url = util.format("%s/repos/%s/%s/contents/%s", meta.base, meta.user, meta.repo, meta.path);
         ajaxGet(url, function (request) {
             var data = JSON.parse(request.responseText);
             callback(data); 

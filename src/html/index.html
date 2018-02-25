@@ -13,7 +13,7 @@
 </head>
 <body>
     <header id="header">
-        <div id="repo-logo">{{ config.repo }}</div>
+        <div id="repo-logo">{{ meta.repo }}</div>
     </header>
     <nav id="file-list">
         <div>
@@ -27,7 +27,7 @@
                     @click="select(idx)"
                     v-on:mouseenter="preloadByIndex(idx)"
                 >
-                    <a class="file-name" :href="config.entryPrefix + file.name">{{ file.name | trimext }}</a>
+                    <a class="file-name" :href="meta.entryPrefix + file.name">{{ file.name | trimext }}</a>
                 </li>
                 <li class="file-item" v-show="loading">
                     <div>Loading...</div>

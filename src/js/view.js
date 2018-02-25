@@ -47,11 +47,11 @@ function makeEventBus() {
     });
 }
 
-function makeFileListVue(config, api, bus) {
+function makeFileListVue(meta, api, bus) {
     var vue = new Vue({
-        el: config.fileListEl,
+        el: meta.fileListEl,
         data: {
-            config: config,
+            meta: meta,
             fileList: null,
             index: null,
             api: api,
@@ -111,12 +111,12 @@ function makeFileListVue(config, api, bus) {
     return vue;
 }
 
-function makeContentVue(config, api, bus) {
-    var fileCache = lru(config.cacheSize);
+function makeContentVue(meta, api, bus) {
+    var fileCache = lru(meta.cacheSize);
     var vue = new Vue({
-        el: config.fileContentEl,
+        el: meta.fileContentEl,
         data: {
-            config: config,
+            meta: meta,
             api: api,
             file: null,
             bus: bus,
@@ -162,24 +162,24 @@ function makeContentVue(config, api, bus) {
     return vue;
 }
 
-function makeHeaderVue(el, config) {
+function makeHeaderVue(el, meta) {
     return new Vue({
         el: el,
         data: {
-            config: config,
+            meta: meta,
         }
     })
 }
 
-export default function main(config) {
-    var vHeader = makeHeaderVue(config.headerEl, config);
-    var api = new ghAPI(config);
+export default function main(meta) {
+    var vHeader = makeHeaderVue(meta.headerEl, meta);
+    var api = new ghAPI(meta);
     var vBus = makeEventBus();
-    var vFileList = makeFileListVue(config, api, vBus);
-    var vFileContent = makeContentVue(config, api, vBus);
+    var vFileList = makeFileListVue(meta, api, vBus);
+    var vFileContent = makeContentVue(meta, api, vBus);
 
     vBus.fileList = vFileList;
     vBus.fileContent = vFileContent;
 
-    vFileList.refresh(config.entry);
+    vFileList.refresh(meta.entry);
 }
