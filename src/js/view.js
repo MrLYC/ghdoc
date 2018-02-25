@@ -25,7 +25,8 @@ function makeEventBus() {
 
             },
             fileListSelectedFile(index) {
-                this.fileContent.refresh(this.fileList.currentItem);
+                var file = this.fileList.currentItem;
+                this.fileContent.refresh(file);
                 this.fileContentWillLoadIndex(index + 1);
             },
             fileListSelectedDir(index) {
@@ -63,12 +64,12 @@ function makeFileListVue(config, api, bus) {
             },
         },
         methods: {
-            refresh() {
+            refresh(selectedName) {
                 var self = this;
                 self.loading = true;
                 this.api.getRepoFiles((fileList) => {
                     self.fileList = fileList;
-                    self.select(0);
+                    self.select(this.getIndexByName(selectedName) || 0);
                     self.loading = false;
                     self.bus.fileListRefreshDone();
                 });
@@ -83,6 +84,15 @@ function makeFileListVue(config, api, bus) {
                 } else if (this.currentItem.type == "dir") {
                     this.bus.fileListSelectedDir(index);
                 }
+            },
+            getIndexByName(name) {
+                for (const index in this.fileList) {
+                    var file = this.fileList[index];
+                    if (file.name == name) {
+                        return index;
+                    }
+                }
+                return null;
             },
             getfileByIndex(index) {
                 if (this.fileList.length == 0) {
@@ -171,5 +181,5 @@ export default function main(config) {
     vBus.fileList = vFileList;
     vBus.fileContent = vFileContent;
 
-    vFileList.refresh();
+    vFileList.refresh(config.entry);
 }

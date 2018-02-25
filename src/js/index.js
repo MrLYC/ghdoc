@@ -1,10 +1,13 @@
 import main from "./view"
 
+var entryPrefix = "#&";
 var config = Object.assign({
     user: "",
     repo: "",
     path: "docs",
     base: "//api.github.com",
+    entryPrefix: entryPrefix,
+    entry: location.hash.replace(new RegExp("^" + entryPrefix), ""),
     cacheSize: 10,
     fileListEl: "#file-list",
     fileContentEl: "#file-content",
@@ -12,11 +15,17 @@ var config = Object.assign({
 }, CONFIG);
 
 if (config.user == "") {
-    config.user = document.location.hostname.split(".", 1)[0];
+    config.user = location.hostname.split(".", 1)[0];
 }
 
 if (config.repo == "") {
-    config.repo = document.location.pathname.split("/", 2)[1];
+    config.repo = location.pathname.split("/", 2)[1];
+}
+
+window.onhashchange = function () {
+    if (location.hash.startsWith(entryPrefix)) {
+        window.scrollTo(0, 0);
+    }
 }
 
 main(config);
