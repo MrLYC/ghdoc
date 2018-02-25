@@ -7,6 +7,7 @@ DEVNPM := env NODE_ENV=development npm
 
 .PHONY: build
 build: ${DISTDIR}
+	rm -rf "${DISTDIR}"/* || true
 	${NPM} run build
 
 ${DISTDIR}:

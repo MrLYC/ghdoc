@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const MinifyPlugin = require("babel-minify-webpack-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const extractSass = new ExtractTextPlugin({
     filename: "style.[contenthash].css",
@@ -19,6 +20,7 @@ var plugins = [
 if (process.env.NODE_ENV !== "development") {
     plugins.push(new MinifyPlugin());
     plugins.push(new UglifyJsPlugin());
+    plugins.push(new OptimizeCssAssetsPlugin());
 }
 
 module.exports = {

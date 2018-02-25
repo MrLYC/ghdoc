@@ -21,6 +21,7 @@
     "lru-cache": "^4.1.1",
     "marked": "^0.3.16",
     "node-sass": "^4.7.2",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.20.2",
     "uglifyjs-webpack-plugin": "^1.2.0",
