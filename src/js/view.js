@@ -19,25 +19,28 @@ function makeEventBus() {
         },
         methods: {
             fileListRefreshDone() {
-                this.fileContent.refresh(this.fileList.currentItem);
+
             },
             fileContentRefreshDone() {
 
             },
             fileListSelectedFile(index) {
-                var self = this;
                 this.fileContent.refresh(this.fileList.currentItem);
-                if (!this.preloading) {
-                    var file = this.fileList.getfileByIndex(index + 1);
+                this.fileContentWillLoadIndex(index + 1);
+            },
+            fileListSelectedDir(index) {
+
+            },
+            fileContentWillLoadIndex(index) {
+                var self = this;
+                if (!this.preloading && !this.fileList.loading && !this.fileContent.loading) {
+                    var file = this.fileList.getfileByIndex(index);
                     if (file != null) {
                         this.fileContent.load(file, function () {
                             self.preloading = false;
                         });
                     }
                 }
-            },
-            fileListSelectedDir(index) {
-
             },
         }
     });
@@ -49,7 +52,7 @@ function makeFileListVue(config, api, bus) {
         data: {
             config: config,
             fileList: null,
-            index: 0,
+            index: null,
             api: api,
             bus: bus,
             loading: true,
@@ -89,7 +92,10 @@ function makeFileListVue(config, api, bus) {
                     return null;
                 }
                 return this.fileList[index];
-            }
+            },
+            preloadByIndex(index) {
+                this.bus.fileContentWillLoadIndex(index);
+            },
         },
     });
     return vue;
