@@ -28,7 +28,7 @@
                 >
                     <a class="file-name" href="#">{{ file.name | trimext }}</a>
                 </li>
-                <li class="file-item" v-show="fileList == null">
+                <li class="file-item" v-show="loading">
                     <div>Loading...</div>
                 </li>
             </ul>
@@ -36,7 +36,7 @@
     </nav>
     <div id="file-content">
         <div class="content">
-            <article id="markdown-body" v-html="content"></article>
+            <article id="markdown-body" v-html="content" v-show="!loading"></article>
         </div>
     </div>
 </body>

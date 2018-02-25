@@ -15,22 +15,26 @@ function makeEventBus() {
         data: {
             fileList: null,
             fileContent: null,
+            preloading: false,
         },
         methods: {
             fileListRefreshDone() {
                 this.fileContent.refresh(this.fileList.currentItem);
             },
-            fileContentWillLoad(file, callback) {
-                if (file != null) {
-                    this.fileContent.load(file, callback);
-                }
-            },
             fileContentRefreshDone() {
 
             },
             fileListSelectedFile(index) {
+                var self = this;
                 this.fileContent.refresh(this.fileList.currentItem);
-                this.fileList.preloadByIndex(index + 1);
+                if (!this.preloading) {
+                    var file = this.fileList.getfileByIndex(index + 1);
+                    if (file != null) {
+                        this.fileContent.load(file, function () {
+                            self.preloading = false;
+                        });
+                    }
+                }
             },
             fileListSelectedDir(index) {
 
@@ -48,7 +52,7 @@ function makeFileListVue(config, api, bus) {
             index: 0,
             api: api,
             bus: bus,
-            preloading: false,
+            loading: true,
         },
         computed: {
             currentItem() {
@@ -58,9 +62,11 @@ function makeFileListVue(config, api, bus) {
         methods: {
             refresh() {
                 var self = this;
+                self.loading = true;
                 this.api.getRepoFiles((fileList) => {
                     self.fileList = fileList;
                     self.select(0);
+                    self.loading = false;
                     self.bus.fileListRefreshDone();
                 });
             },
@@ -73,19 +79,6 @@ function makeFileListVue(config, api, bus) {
                     this.bus.fileListSelectedFile(index);
                 } else if (this.currentItem.type == "dir") {
                     this.bus.fileListSelectedDir(index);
-                }
-            },
-            preloadByIndex(index) {
-                if (this.preloading) {
-                    return;
-                }
-                var self = this;
-                var file = this.getfileByIndex(index);
-                if (file != null) {
-                    self.preloading = true;
-                    this.bus.fileContentWillLoad(file, function () {
-                        self.preloading = false;
-                    });
                 }
             },
             getfileByIndex(index) {
@@ -112,6 +105,7 @@ function makeContentVue(config, api, bus) {
             file: null,
             bus: bus,
             content: "",
+            loading: true,
         },
         methods: {
             load(file, callback) {
@@ -139,8 +133,10 @@ function makeContentVue(config, api, bus) {
                     return;
                 }
 
+                self.loading = true;
                 this.load(this.file, function (content) {
                     self.content = content;
+                    self.loading = false;
                     self.bus.fileContentRefreshDone();
                 });
             },
