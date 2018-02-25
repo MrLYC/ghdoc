@@ -1,7 +1,7 @@
 import main from "./view"
 
 var entryPrefix = "#&";
-var config = Object.assign({
+var meta = Object.assign({
     user: "",
     repo: "",
     path: "docs",
@@ -12,20 +12,14 @@ var config = Object.assign({
     fileListEl: "#file-list",
     fileContentEl: "#file-content",
     headerEl: "#header",
-}, CONFIG);
+}, META);
 
-if (config.user == "") {
-    config.user = location.hostname.split(".", 1)[0];
+if (meta.user == "") {
+    meta.user = location.hostname.split(".", 1)[0];
 }
 
-if (config.repo == "") {
-    config.repo = location.pathname.split("/", 2)[1];
+if (meta.repo == "") {
+    meta.repo = location.pathname.split("/", 2)[1];
 }
 
-window.onhashchange = function () {
-    if (location.hash.startsWith(entryPrefix)) {
-        window.scrollTo(0, 0);
-    }
-}
-
-main(config);
+main(meta);
