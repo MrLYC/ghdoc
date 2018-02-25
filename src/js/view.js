@@ -26,6 +26,7 @@ function makeEventBus() {
             },
             fileListSelectedFile(index) {
                 var file = this.fileList.currentItem;
+                window.scrollTo(0, 0);
                 this.fileContent.refresh(file);
                 this.fileContentWillLoadIndex(index + 1);
             },
