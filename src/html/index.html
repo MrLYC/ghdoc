@@ -35,8 +35,9 @@
         </div>
     </nav>
     <div id="file-content">
-        <div class="content">
-            <article id="markdown-body" v-html="content" v-show="!loading"></article>
+        <div class="content" id="markdown-body">
+            <article v-show="loading">Loading...</article>
+            <article v-html="content" v-show="!loading"></article>
         </div>
     </div>
 </body>
