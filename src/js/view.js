@@ -28,10 +28,11 @@ function makeEventBus() {
             fileContentRefreshDone() {
 
             },
-            fileListSelectedFile() {
+            fileListSelectedFile(index) {
                 this.fileContent.refresh(this.fileList.currentItem);
+                this.fileList.preloadByIndex(index + 1);
             },
-            fileListSelectedDir() {
+            fileListSelectedDir(index) {
 
             },
         }
@@ -59,7 +60,7 @@ function makeFileListVue(config, api, bus) {
                 var self = this;
                 this.api.getRepoFiles((fileList) => {
                     self.fileList = fileList;
-                    self.index = 0;
+                    self.select(0);
                     self.bus.fileListRefreshDone();
                 });
             },
@@ -69,9 +70,9 @@ function makeFileListVue(config, api, bus) {
                 }
                 this.index = index;
                 if (this.currentItem.type == "file") {
-                    this.bus.fileListSelectedFile();
+                    this.bus.fileListSelectedFile(index);
                 } else if (this.currentItem.type == "dir") {
-                    this.bus.fileListSelectedDir();
+                    this.bus.fileListSelectedDir(index);
                 }
             },
             preloadByIndex(index) {
