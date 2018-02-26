@@ -7,7 +7,7 @@ var meta = Object.assign({
     path: "docs",
     base: "//api.github.com",
     entryPrefix: entryPrefix,
-    entry: location.hash.replace(new RegExp("^" + entryPrefix), ""),
+    entry: "readme.md",
     cacheSize: 10,
     fileListEl: "#file-list",
     fileContentEl: "#file-content",
@@ -20,6 +20,11 @@ if (meta.user == "") {
 
 if (meta.repo == "") {
     meta.repo = location.pathname.split("/", 2)[1];
+}
+
+var entry = location.hash.replace(new RegExp("^" + entryPrefix), "");
+if (entry !== "") {
+    meta.entry = entry;
 }
 
 main(meta);
