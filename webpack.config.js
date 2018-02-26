@@ -34,6 +34,9 @@ module.exports = {
     },
     devServer: {
         contentBase: './dist',
+        host: process.env.IP || 'localhost',
+        port: process.env.PORT || 8080,
+        allowedHosts: [process.env.ALLOWED_HOST || "localhost"],
     },
     resolve: {
         alias: {

@@ -1,6 +1,6 @@
 import main from "./view"
 
-var entryPrefix = "#&";
+var entryPrefix = "#/";
 var meta = Object.assign({
     user: "",
     repo: "",
