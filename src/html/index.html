@@ -13,9 +13,10 @@
 </head>
 <body>
     <header id="header">
-        <div id="repo-logo">{{ meta.repo }}</div>
+        <div id="repo-logo" v-show="true" style="display: none">{{ meta.repo }}</div>
+        <div id="repo-logo-loading" v-show="false">Loading...</div>
     </header>
-    <nav id="file-list">
+    <nav id="file-list" v-show="true" style="display: none">
         <div>
             <ul class="content">
                 <li
@@ -38,7 +39,7 @@
             </ul>
         </div>
     </nav>
-    <div id="file-content">
+    <div id="file-content" v-show="true" style="display: none">
         <div class="content" id="markdown-body">
             <article v-show="loading">Loading...</article>
             <article v-html="content" v-show="!loading"></article>
