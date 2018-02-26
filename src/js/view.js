@@ -69,7 +69,9 @@ function makeFileListVue(meta, api, bus) {
                 var self = this;
                 self.loading = true;
                 this.api.getRepoFiles((fileList) => {
-                    self.fileList = fileList;
+                    self.fileList = fileList.filter(file => {
+                        return file.name.search(self.meta.allowedExt) >= 0;
+                    });
                     self.select(this.getIndexByName(selectedName) || 0);
                     self.loading = false;
                     self.bus.fileListRefreshDone();

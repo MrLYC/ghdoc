@@ -12,6 +12,7 @@ var meta = Object.assign({
     fileListEl: "#file-list",
     fileContentEl: "#file-content",
     headerEl: "#header",
+    allowedExt: /(md|markdown|mkd)$/,
 }, META);
 
 if (meta.user == "") {
