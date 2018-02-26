@@ -25,9 +25,12 @@
                     :data-id="file.id"
                     :class="{ active: idx == index }"
                     @click="select(idx)"
-                    v-on:mouseenter="preloadByIndex(idx)"
                 >
-                    <a class="file-name" :href="meta.entryPrefix + file.name">{{ file.name | trimext }}</a>
+                    <a
+                        class="file-name"
+                        :href="meta.entryPrefix + file.name"
+                        v-on:mouseenter="preloadByIndex(idx)"
+                    >{{ file.name | trimext }}</a>
                 </li>
                 <li class="file-item" v-show="loading">
                     <div>Loading...</div>
