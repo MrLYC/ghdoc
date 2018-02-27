@@ -1,6 +1,7 @@
+import queryString from "query-string"
 import main from "./view"
 
-var entryPrefix = "#/";
+const entryPrefix = "#/";
 var meta = Object.assign({
     user: "",
     repo: "",
@@ -14,6 +15,7 @@ var meta = Object.assign({
     headerEl: "#header",
     allowedExt: /(md|markdown|mkd)$/,
 }, META);
+meta = Object.assign(meta, queryString.parse(location.search));
 
 if (meta.user == "") {
     meta.user = location.hostname.split(".", 1)[0];
