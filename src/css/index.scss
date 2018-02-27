@@ -35,7 +35,6 @@ $borderRadius: 5px;
 
 #file-list {
     color: $fileItemColor;
-    background-color: #fafafa;
     border-right: 1px solid #e3e6e8;
     overflow: auto;
 
@@ -63,14 +62,20 @@ $borderRadius: 5px;
         background: #e3e6e8;
     }
 
-    #file-list-filter-input {
-        display: block;
-        width: 90%;
-        padding: 2px;
-        margin: 5px auto;
-        height: $fileItemHeight;
-        border-radius: $borderRadius;
-        border: #e3e6e8 1px solid;
+    #file-list-filter {
+        padding: 15px 0;
+        background-color: #fafafa;
+        border-bottom: 1px solid #e3e6e8;
+
+        #file-list-filter-input {
+            display: block;
+            width: 90%;
+            padding: 2px;
+            margin: 0 auto;
+            height: $fileItemHeight;
+            border-radius: $borderRadius;
+            border: #e3e6e8 1px solid;
+        }
     }
 }
 
