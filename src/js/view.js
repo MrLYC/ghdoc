@@ -10,6 +10,16 @@ function trimext (value) {
     return path.basename(value, path.extname(value));
 };
 
+function getItemByIndexOrNull(list, index) {
+    if (list.length == 0) {
+        return null;
+    }
+    if (index > list.length) {
+        return null;
+    }
+    return list[index];
+}
+
 function makeEventBus() {
     return new Vue({
         data: {
@@ -29,7 +39,6 @@ function makeEventBus() {
                 var file = this.fileList.currentItem;
                 this.fileContent.refresh(file);
                 this.fileContent.scrollToTop();
-                this.fileContentWillLoadIndex(index + 1);
             },
             fileListSelectedDir(index) {
 
@@ -37,7 +46,7 @@ function makeEventBus() {
             fileContentWillLoadIndex(index) {
                 var self = this;
                 if (!this.preloading && !this.fileList.loading && !this.fileContent.loading) {
-                    var file = this.fileList.getfileByIndex(index);
+                    var file = this.fileList.getavailableFileByIndex(index);
                     if (file != null) {
                         this.fileContent.load(file, function () {
                             self.preloading = false;
@@ -78,6 +87,7 @@ function makeFileListVue(meta, api, bus) {
                         fileList.push(Object.assign({
                             title: trimext(file.name),
                             index: index,
+                            number: fileList.length,
                         }, file));
                     }
                 }
@@ -123,13 +133,10 @@ function makeFileListVue(meta, api, bus) {
                 return null;
             },
             getfileByIndex(index) {
-                if (this.fileList.length == 0) {
-                    return null;
-                }
-                if (index > this.fileList.length) {
-                    return null;
-                }
-                return this.fileList[index];
+                return getItemByIndexOrNull(this.fileList, index);
+            },
+            getavailableFileByIndex(index) {
+                return getItemByIndexOrNull(this.availableFileList, index);
             },
             preloadByIndex(index) {
                 this.bus.fileContentWillLoadIndex(index);
