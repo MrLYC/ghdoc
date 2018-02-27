@@ -14,7 +14,7 @@
 <body>
     <header id="header">
         <div id="repo-logo" v-show="true" style="display: none">{{ meta.repo }}</div>
-        <div id="repo-logo-loading" v-show="false">Loading...</div>
+        <div id="repo-logo-message" v-show="message" v-text="message">Loading...</div>
     </header>
     <nav id="file-list" v-show="true" style="display: none">
         <div>
@@ -23,7 +23,8 @@
                     id="file-list-filter-input"
                     type="text"
                     v-model="pattern"
-                    placeholder="Search"
+                    :placeholder="message || 'Search'"
+                    :disabled="loading"
                     @keyup.enter="applyPattern"
                 />
             </div>
@@ -42,18 +43,13 @@
                         v-on:mouseenter="preloadByIndex(file.index)"
                     >{{ file.name | trimext }}</a>
                 </li>
-                <li class="file-item" v-show="loading">
-                    <div>Loading...</div>
-                </li>
             </ul>
         </div>
     </nav>
     <div id="file-content" v-show="true" style="display: none">
         <div class="content" id="markdown-body">
-            <article v-show="loading">Loading...</article>
-            <transition appear>
-                <article v-html="content" v-show="!loading"></article>
-            </transition>
+            <article v-show="message" id="file-content-message">{{ message }}</article>
+            <article v-html="content" v-show="!loading"></article>
         </div>
     </div>
 </body>

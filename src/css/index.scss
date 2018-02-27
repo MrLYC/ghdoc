@@ -2,22 +2,36 @@
 @import "./markdown.scss";
 @import "./highlight.scss";
 
+$fileItemColor: #666666;
+$fileItemHeight: 24px;
+$fileItemPadding: 5px;
+$borderRadius: 5px;
+
 * {
     font-family: 'lucida grande','lucida sans unicode',lucida,helvetica,'Hiragino Sans GB','Microsoft YaHei','WenQuanYi Micro Hei',sans-serif;
 }
 
-#repo-logo {
-    height: $headerHeight;
-    line-height: $headerHeight;
-    font-size: 1.4em;
-    padding: 0 16px;
-    color: #cac8c8;
-    background-color: #2d2d2d;
-}
+#header {
+    background: #2d2d2d;
 
-$fileItemColor : #666666;
-$fileItemHeight : 24px;
-$fileItemPadding : 5px;
+    #repo-logo {
+        height: $headerHeight;
+        line-height: $headerHeight;
+        font-size: 1.4em;
+        padding: 0 16px;
+        color: #cac8c8;
+    }
+
+    #repo-logo-message {
+        float: right;
+        color: #004085;
+        background-color: #cce5ff;
+        border: #b8daff 1px solid;
+        border-radius: $borderRadius;
+        padding: 12px;
+        min-width: 200px;
+    }
+}
 
 #file-list {
     color: $fileItemColor;
@@ -55,7 +69,7 @@ $fileItemPadding : 5px;
         padding: 2px;
         margin: 5px auto;
         height: $fileItemHeight;
-        border-radius: 2px;
+        border-radius: $borderRadius;
         border: #e3e6e8 1px solid;
     }
 }

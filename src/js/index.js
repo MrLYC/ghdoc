@@ -14,6 +14,7 @@ var meta = Object.assign({
     fileContentEl: "#file-content",
     headerEl: "#header",
     allowedExt: /(md|markdown|mkd)$/,
+    loadingMessage: "Loading...",
     allowQueryString: true,
 }, META);
 

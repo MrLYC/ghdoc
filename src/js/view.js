@@ -58,6 +58,7 @@ function makeFileListVue(meta, api, bus) {
             api: api,
             bus: bus,
             loading: true,
+            message: meta.loadingMessage,
             pattern: "",
         },
         computed: {
@@ -81,12 +82,14 @@ function makeFileListVue(meta, api, bus) {
             refresh(selectedName) {
                 var self = this;
                 self.loading = true;
+                self.message = self.meta.loadingMessage;
                 this.api.getRepoFiles((fileList) => {
                     self.fileList = fileList.filter(file => {
                         return file.name.search(self.meta.allowedExt) >= 0;
                     });
                     self.select(this.getIndexByName(selectedName) || 0);
                     self.loading = false;
+                    self.message = "";
                     self.bus.fileListRefreshDone();
                 });
             },
@@ -145,6 +148,7 @@ function makeContentVue(meta, api, bus) {
             bus: bus,
             content: "",
             loading: true,
+            message: meta.loadingMessage,
         },
         methods: {
             load(file, callback) {
@@ -174,9 +178,11 @@ function makeContentVue(meta, api, bus) {
                 }
 
                 self.loading = true;
+                self.message = meta.loadingMessage;
                 this.load(this.file, function (content) {
                     self.content = content;
                     self.loading = false;
+                    self.message = "";
                     self.bus.fileContentRefreshDone();
                 });
             },
@@ -190,8 +196,12 @@ function makeHeaderVue(el, meta) {
         el: el,
         data: {
             meta: meta,
-        }
-    })
+            message: meta.loadingMessage,
+        },
+        mounted: function () {
+            this.message = "";
+        },
+    });
 }
 
 export default function main(meta) {
