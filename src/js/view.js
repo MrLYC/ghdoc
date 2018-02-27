@@ -91,6 +91,9 @@ function makeFileListVue(meta, api, bus) {
                     self.loading = false;
                     self.message = "";
                     self.bus.fileListRefreshDone();
+                }, (err) => {
+                    self.message = err.message;
+                    self.loading = false;
                 });
             },
             select(index) {
@@ -151,7 +154,7 @@ function makeContentVue(meta, api, bus) {
             message: meta.loadingMessage,
         },
         methods: {
-            load(file, callback) {
+            load(file, callback, err_callback) {
                 var self = this;
                 var url = file.download_url;
                 var loaded = function (content) {
@@ -162,8 +165,12 @@ function makeContentVue(meta, api, bus) {
                 }
                 var content = fileCache.get(url);
                 if (content == undefined) {
-                    this.api.getFileContent(url, function (content) {
+                    this.api.getFileContent(url, (content) => {
                         loaded(renderMarkdown(content.trim()));
+                    }, (err) => {
+                        if (err_callback != undefined) {
+                            err_callback(err);
+                        }
                     });
                 } else {
                     loaded(content);
@@ -179,11 +186,14 @@ function makeContentVue(meta, api, bus) {
 
                 self.loading = true;
                 self.message = meta.loadingMessage;
-                this.load(this.file, function (content) {
+                this.load(this.file, (content) => {
                     self.content = content;
                     self.loading = false;
                     self.message = "";
                     self.bus.fileContentRefreshDone();
+                }, (err) => {
+                    self.message = err.message;
+                    self.loading = false;
                 });
             },
         }
