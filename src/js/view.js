@@ -122,6 +122,13 @@ function makeFileListVue(meta, api, bus) {
             preloadByIndex(index) {
                 this.bus.fileContentWillLoadIndex(index);
             },
+            applyPattern() {
+                if (this.availableFileList.length === 0) {
+                    return
+                }
+                var file = this.availableFileList[0];
+                this.select(file.index);
+            },
         },
     });
     return vue;

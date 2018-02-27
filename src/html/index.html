@@ -19,7 +19,13 @@
     <nav id="file-list" v-show="true" style="display: none">
         <div>
             <div id="file-list-filter">
-                <input id="file-list-filter-input" type="text" v-model="pattern" placeholder="Search" />
+                <input
+                    id="file-list-filter-input"
+                    type="text"
+                    v-model="pattern"
+                    placeholder="Search"
+                    @keyup.enter="applyPattern"
+                />
             </div>
             <ul class="content">
                 <li
