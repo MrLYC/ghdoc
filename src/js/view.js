@@ -68,9 +68,13 @@ function makeFileListVue(meta, api, bus) {
             },
             availableFileList() {
                 var fileList = [];
+                var pattern = this.pattern.toLowerCase();
                 for (var index in this.fileList) {
                     var file = this.fileList[index];
-                    if (file.name.toLowerCase().indexOf(this.pattern.toLowerCase()) >= 0) {
+                    if (file.type === "dir" || file.name.startsWith(".")) {
+                        continue;
+                    }
+                    if (file.name.toLowerCase().indexOf(pattern) >= 0) {
                         fileList.push(Object.assign({
                             title: trimext(file.name),
                             index: index,
