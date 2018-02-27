@@ -63,6 +63,9 @@ function makeFileListVue(meta, api, bus) {
             currentItem() {
                 return this.getfileByIndex(this.index);
             },
+            availableFileList() {
+                return this.fileList;
+            },
         },
         methods: {
             refresh(selectedName) {
@@ -89,8 +92,8 @@ function makeFileListVue(meta, api, bus) {
                 }
             },
             getIndexByName(name) {
-                for (const index in this.fileList) {
-                    var file = this.fileList[index];
+                for (const index in this.availableFileList) {
+                    var file = this.availableFileList[index];
                     if (file.name == name) {
                         return index;
                     }
@@ -98,13 +101,13 @@ function makeFileListVue(meta, api, bus) {
                 return null;
             },
             getfileByIndex(index) {
-                if (this.fileList.length == 0) {
+                if (this.availableFileList.length == 0) {
                     return null;
                 }
-                if (index > this.fileList.length) {
+                if (index > this.availableFileList.length) {
                     return null;
                 }
-                return this.fileList[index];
+                return this.availableFileList[index];
             },
             preloadByIndex(index) {
                 this.bus.fileContentWillLoadIndex(index);

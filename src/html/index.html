@@ -21,7 +21,7 @@
             <ul class="content">
                 <li
                     class="file-item"
-                    v-for="(file, idx) in fileList"
+                    v-for="(file, idx) in availableFileList"
                     :data-index="idx"
                     :data-id="file.id"
                     :class="{ active: idx == index }"
@@ -42,7 +42,9 @@
     <div id="file-content" v-show="true" style="display: none">
         <div class="content" id="markdown-body">
             <article v-show="loading">Loading...</article>
-            <article v-html="content" v-show="!loading"></article>
+            <transition appear>
+                <article v-html="content" v-show="!loading"></article>
+            </transition>
         </div>
     </div>
 </body>
