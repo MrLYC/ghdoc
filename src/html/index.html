@@ -18,6 +18,9 @@
     </header>
     <nav id="file-list" v-show="true" style="display: none">
         <div>
+            <div id="file-list-filter">
+                <input id="file-list-filter-input" type="text" v-model="pattern" placeholder="Search" />
+            </div>
             <ul class="content">
                 <li
                     class="file-item"

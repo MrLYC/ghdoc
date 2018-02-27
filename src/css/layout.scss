@@ -32,6 +32,10 @@ body {
     padding: 0;
     margin: 0;
     z-index: 90;
+
+    #file-list-filter {
+        width: 100%;
+    }
 }
 
 #file-content {

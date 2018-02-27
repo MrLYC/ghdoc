@@ -16,6 +16,8 @@
 }
 
 $fileItemColor : #666666;
+$fileItemHeight : 24px;
+$fileItemPadding : 5px;
 
 #file-list {
     color: $fileItemColor;
@@ -30,7 +32,8 @@ $fileItemColor : #666666;
 
     li.file-item {
         list-style: none;
-        padding: 5px;
+        padding: $fileItemPadding;
+        height: $fileItemHeight;
 
         .file-name {
             text-decoration: none;
@@ -44,6 +47,15 @@ $fileItemColor : #666666;
 
     li.active {
         background: #e3e6e8;
+    }
+
+    #file-list-filter-input {
+        display: block;
+        width: 90%;
+        margin: 5px auto;
+        height: $fileItemHeight;
+        border-radius: 2px;
+        border: #e3e6e8 1px solid;
     }
 }
 

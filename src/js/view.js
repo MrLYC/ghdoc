@@ -53,18 +53,21 @@ function makeFileListVue(meta, api, bus) {
         el: meta.fileListEl,
         data: {
             meta: meta,
-            fileList: null,
+            fileList: [],
             index: null,
             api: api,
             bus: bus,
             loading: true,
+            pattern: "",
         },
         computed: {
             currentItem() {
                 return this.getfileByIndex(this.index);
             },
             availableFileList() {
-                return this.fileList;
+                return this.fileList.filter((file) => {
+                    return file.name.toLowerCase().indexOf(this.pattern.toLowerCase()) !== -1;
+                });
             },
         },
         methods: {
