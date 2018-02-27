@@ -27,8 +27,8 @@ function makeEventBus() {
             },
             fileListSelectedFile(index) {
                 var file = this.fileList.currentItem;
-                window.scrollTo(0, 0);
                 this.fileContent.refresh(file);
+                this.fileContent.scrollToTop();
                 this.fileContentWillLoadIndex(index + 1);
             },
             fileListSelectedDir(index) {
@@ -177,6 +177,9 @@ function makeContentVue(meta, api, bus) {
                 } else {
                     loaded(content);
                 }
+            },
+            scrollToTop() {
+                this.$el.scrollTop = 0;
             },
             refresh(file) {
                 var self = this;

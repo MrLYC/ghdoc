@@ -75,6 +75,8 @@ $borderRadius: 5px;
 }
 
 #file-content {
+    overflow: auto;
+
     .content{
         padding: 10px 10px;
     }

@@ -39,7 +39,7 @@ body {
 }
 
 #file-content {
-    position: absolute;
+    position: fixed;
     top: $headerHeight;
     bottom: 0;
     left: $navWidth;
