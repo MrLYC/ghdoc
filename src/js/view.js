@@ -13,6 +13,7 @@ Vue.filter("trimext", function (value) {
 function makeEventBus() {
     return new Vue({
         data: {
+            header: null,
             fileList: null,
             fileContent: null,
             preloading: false,
@@ -221,6 +222,7 @@ export default function main(meta) {
     var vFileList = makeFileListVue(meta, api, vBus);
     var vFileContent = makeContentVue(meta, api, vBus);
 
+    vBus.header = vHeader;
     vBus.fileList = vFileList;
     vBus.fileContent = vFileContent;
 
