@@ -65,9 +65,16 @@ function makeFileListVue(meta, api, bus) {
                 return this.getfileByIndex(this.index);
             },
             availableFileList() {
-                return this.fileList.filter((file) => {
-                    return file.name.toLowerCase().indexOf(this.pattern.toLowerCase()) !== -1;
-                });
+                var fileList = [];
+                for (var index in this.fileList) {
+                    var file = this.fileList[index];
+                    if (file.name.toLowerCase().indexOf(this.pattern.toLowerCase()) >= 0) {
+                        fileList.push(Object.assign({
+                            index: index,
+                        }, file));
+                    }
+                }
+                return fileList;
             },
         },
         methods: {
@@ -95,8 +102,8 @@ function makeFileListVue(meta, api, bus) {
                 }
             },
             getIndexByName(name) {
-                for (const index in this.availableFileList) {
-                    var file = this.availableFileList[index];
+                for (const index in this.fileList) {
+                    var file = this.fileList[index];
                     if (file.name == name) {
                         return index;
                     }
@@ -104,13 +111,13 @@ function makeFileListVue(meta, api, bus) {
                 return null;
             },
             getfileByIndex(index) {
-                if (this.availableFileList.length == 0) {
+                if (this.fileList.length == 0) {
                     return null;
                 }
-                if (index > this.availableFileList.length) {
+                if (index > this.fileList.length) {
                     return null;
                 }
-                return this.availableFileList[index];
+                return this.fileList[index];
             },
             preloadByIndex(index) {
                 this.bus.fileContentWillLoadIndex(index);

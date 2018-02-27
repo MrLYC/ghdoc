@@ -24,16 +24,16 @@
             <ul class="content">
                 <li
                     class="file-item"
-                    v-for="(file, idx) in availableFileList"
-                    :data-index="idx"
+                    v-for="file in availableFileList"
+                    :data-index="file.index"
                     :data-id="file.id"
-                    :class="{ active: idx == index }"
-                    @click="select(idx)"
+                    :class="{ active: file.index == index }"
+                    @click="select(file.index)"
                 >
                     <a
                         class="file-name"
                         :href="meta.entryPrefix + file.name"
-                        v-on:mouseenter="preloadByIndex(idx)"
+                        v-on:mouseenter="preloadByIndex(file.index)"
                     >{{ file.name | trimext }}</a>
                 </li>
                 <li class="file-item" v-show="loading">
