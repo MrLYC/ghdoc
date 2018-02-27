@@ -6,9 +6,9 @@ import ghAPI from "./github_api"
 import renderMarkdown from "./markdown"
 
 
-Vue.filter("trimext", function (value) {
+function trimext (value) {
     return path.basename(value, path.extname(value));
-});
+};
 
 function makeEventBus() {
     return new Vue({
@@ -72,6 +72,7 @@ function makeFileListVue(meta, api, bus) {
                     var file = this.fileList[index];
                     if (file.name.toLowerCase().indexOf(this.pattern.toLowerCase()) >= 0) {
                         fileList.push(Object.assign({
+                            title: trimext(file.name),
                             index: index,
                         }, file));
                     }
@@ -88,7 +89,7 @@ function makeFileListVue(meta, api, bus) {
                     self.fileList = fileList.filter(file => {
                         return file.name.search(self.meta.allowedExt) >= 0;
                     });
-                    self.select(this.getIndexByName(selectedName) || 0);
+                    self.select(this.getIndexByTitle(selectedName) || 0);
                     self.loading = false;
                     self.message = "";
                     self.bus.fileListRefreshDone();
@@ -108,11 +109,11 @@ function makeFileListVue(meta, api, bus) {
                     this.bus.fileListSelectedDir(index);
                 }
             },
-            getIndexByName(name) {
-                for (const index in this.fileList) {
-                    var file = this.fileList[index];
-                    if (file.name == name) {
-                        return index;
+            getIndexByTitle(title) {
+                for (const index in this.availableFileList) {
+                    var file = this.availableFileList[index];
+                    if (file.title == title) {
+                        return file.index;
                     }
                 }
                 return null;

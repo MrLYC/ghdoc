@@ -39,9 +39,9 @@
                 >
                     <a
                         class="file-name"
-                        :href="meta.entryPrefix + file.name"
+                        :href="meta.entryPrefix + file.title"
                         v-on:mouseenter="preloadByIndex(file.index)"
-                    >{{ file.name | trimext }}</a>
+                    >{{ file.title }}</a>
                 </li>
             </ul>
         </div>
