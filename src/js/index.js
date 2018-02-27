@@ -14,8 +14,12 @@ var meta = Object.assign({
     fileContentEl: "#file-content",
     headerEl: "#header",
     allowedExt: /(md|markdown|mkd)$/,
+    allowQueryString: true,
 }, META);
-meta = Object.assign(meta, queryString.parse(location.search));
+
+if (meta.allowQueryString) {
+    meta = Object.assign(meta, queryString.parse(location.search));
+}
 
 if (meta.user == "") {
     meta.user = location.hostname.split(".", 1)[0];
