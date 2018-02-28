@@ -48,7 +48,7 @@ function makeEventBus() {
                 if (!this.preloading && !this.fileList.loading && !this.fileContent.loading) {
                     var file = this.fileList.getavailableFileByIndex(index);
                     if (file != null) {
-                        this.fileContent.load(file, function () {
+                        this.fileContent.load(file.download_url, function () {
                             self.preloading = false;
                         });
                     }
@@ -167,9 +167,8 @@ function makeContentVue(meta, api, bus) {
             message: meta.loadingMessage,
         },
         methods: {
-            load(file, callback, err_callback) {
+            load(url, callback, err_callback) {
                 var self = this;
-                var url = file.download_url;
                 var loaded = function (content) {
                     fileCache.set(url, content);
                     if (callback != undefined) {
@@ -193,16 +192,21 @@ function makeContentVue(meta, api, bus) {
                 this.$el.scrollTop = 0;
             },
             refresh(file) {
-                var self = this;
+                var oldFile = this.file;
                 this.file = file;
 
                 if (this.file == null) {
                     return;
                 }
 
+                if (oldFile != null && oldFile.download_url == this.file.download_url) {
+                    return;
+                }
+
+                var self = this;
                 self.loading = true;
                 self.message = meta.loadingMessage;
-                this.load(this.file, (content) => {
+                this.load(this.file.download_url, (content) => {
                     self.content = content;
                     self.loading = false;
                     self.message = "";
