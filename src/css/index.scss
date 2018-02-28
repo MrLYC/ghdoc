@@ -51,10 +51,10 @@ $borderRadius: 5px;
         .file-name {
             text-decoration: none;
             color: $fileItemColor;
-        }
 
-        .file-name:hover {
-            color: #008cff;
+            &:hover {
+                color: #008cff;
+            }
         }
     }
 
