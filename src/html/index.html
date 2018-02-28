@@ -49,7 +49,7 @@
     <div id="file-content" v-show="true" style="display: none">
         <div class="content" id="markdown-body">
             <article v-show="message" id="file-content-message">{{ message }}</article>
-            <article v-html="content" v-show="!loading"></article>
+            <article v-html="content" v-show="!message"></article>
         </div>
     </div>
 </body>
