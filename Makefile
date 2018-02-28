@@ -23,7 +23,7 @@ build-dev:
 
 .PHONY: dev-server
 dev-server:
-	${DEVNPM} run dev-server
+	${DEVNPM} run dev-server --hot
 
 .PHONY: display-modules
 display-modules:
