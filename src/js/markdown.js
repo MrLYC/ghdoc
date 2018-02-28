@@ -4,7 +4,7 @@ import highlight from "highlight.js"
 highlight.initHighlightingOnLoad();
 marked.setOptions({
     highlight: function (code, lang) {
-        if (lang) {
+        if (highlight.getLanguage(lang)) {
             return highlight.highlight(lang, code, true).value;
         }
         return highlight.highlightAuto(code).value;
