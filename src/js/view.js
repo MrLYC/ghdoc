@@ -1,7 +1,6 @@
 import Vue from "vue";
 import util from "util";
 import path from "path";
-import lru from "lru-cache";
 import ghAPI from "./github_api";
 import renderMarkdown from "./markdown";
 import Storage from "./storage"
@@ -155,8 +154,7 @@ function makeFileListVue(meta, api, bus) {
 }
 
 function makeContentVue(meta, api, bus) {
-    var renderedCache = lru(meta.cacheSize);
-    var contentStorage = Storage();
+    var contentCache = Storage(meta.cacheSize);
     var vue = new Vue({
         el: meta.fileContentEl,
         data: {
@@ -175,29 +173,25 @@ function makeContentVue(meta, api, bus) {
 
                 var content;
 
-                var loaded = (data) => {
-                    renderedCache.set(fileHash, data);
+                var fetched = (data) => {
                     if (success_callback != undefined) {
-                        success_callback(data);
+                        success_callback(renderMarkdown(data));
                     }
                 }
-                content = renderedCache.get(fileHash);
-                if (content !== undefined) {
-                    return loaded(content);
-                }
-
-                var fetched = (content) => {
-                    loaded(renderMarkdown(content.trim()));
-                }
-                content = contentStorage.get(fileHash);
+                content = contentCache.get(fileHash);
                 if (content !== undefined) {
                     return fetched(content);
                 }
 
                 this.api.getFileContent(url, (data) => {
-                    contentStorage.set(fileHash, data);
+                    data = data.trim();
+                    contentCache.set(fileHash, data);
                     fetched(data);
-                }, err_callback);
+                }, (data) => {
+                    if (err_callback != undefined) {
+                        err_callback(data);
+                    }
+                });
             },
             scrollToTop() {
                 this.$el.scrollTop = 0;

@@ -9,6 +9,6 @@ function SessionStorage() {
     }
 }
 
-export default function Storage() {
-    return sessionStorage ? new SessionStorage() : lru(100);
+export default function Storage(size) {
+    return sessionStorage ? new SessionStorage() : lru(size);
 }
