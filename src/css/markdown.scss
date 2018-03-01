@@ -297,17 +297,8 @@
       content: "\00a0";
     }
   }
-  pre > code {
-    padding: 0;
-    margin: 0;
-    font-size: 100%;
-    word-break: normal;
-    white-space: pre;
-    background: transparent;
-    border: 0;
-  }
   pre {
-    padding: 16px;
+    padding: 0px;
     overflow: auto;
     font-size: 85%;
     line-height: 1.45;
@@ -316,14 +307,15 @@
   }
   pre {
     word-wrap: normal;
-    code {
+    > code {
       display: inline;
       max-width: initial;
-      padding: 0;
+      padding: 6px;
       margin: 0;
-      overflow: initial;
+      font-size: 100%;
       line-height: inherit;
       word-wrap: normal;
+      white-space: pre;
       background-color: transparent;
       border: 0;
       &:before, &:after {
