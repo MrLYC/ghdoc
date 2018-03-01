@@ -76,22 +76,16 @@ function makeFileListVue(meta, api, bus) {
                 return this.getfileByIndex(this.index);
             },
             availableFileList() {
-                var fileList = [];
                 var pattern = this.pattern.toLowerCase();
-                for (var index in this.fileList) {
-                    var file = this.fileList[index];
-                    if (file.type === "dir" || file.name.startsWith(".")) {
-                        continue;
+                return this.fileList.filter((file) => {
+                    if (file.title.toLowerCase().indexOf(pattern) < 0) {
+                        return false;
                     }
-                    if (file.name.toLowerCase().indexOf(pattern) >= 0) {
-                        fileList.push(Object.assign({
-                            title: trimext(file.name),
-                            index: index,
-                            number: fileList.length,
-                        }, file));
+                    if (file.type == "dir" || file.name.startsWith(".")) {
+                        return false;
                     }
-                }
-                return fileList;
+                    return true;
+                });
             },
         },
         methods: {
@@ -99,10 +93,20 @@ function makeFileListVue(meta, api, bus) {
                 var self = this;
                 self.loading = true;
                 self.message = self.meta.loadingMessage;
-                this.api.getRepoFiles((fileList) => {
-                    self.fileList = fileList.filter(file => {
-                        return file.name.search(self.meta.allowedExt) >= 0;
-                    });
+                this.api.getRepoFiles((files) => {
+                    var fileList = [];
+                    for (var index in files) {
+                        var file = files[index];
+                        if (file.name.search(self.meta.allowedExt) < 0) {
+                            continue;
+                        }
+                        fileList.push(Object.assign({
+                            title: trimext(file.name),
+                            id: index,
+                            index: fileList.length,
+                        }, file));
+                    }
+                    self.fileList = fileList;
                     self.select(this.getIndexByTitle(selectedName) || 0);
                     self.loading = false;
                     self.message = "";
