@@ -4,6 +4,7 @@ import path from "path";
 import lru from "lru-cache";
 import ghAPI from "./github_api";
 import renderMarkdown from "./markdown";
+import Storage from "./storage"
 
 
 function trimext (value) {
@@ -48,7 +49,7 @@ function makeEventBus() {
                 if (!this.preloading && !this.fileList.loading && !this.fileContent.loading) {
                     var file = this.fileList.getavailableFileByIndex(index);
                     if (file != null) {
-                        this.fileContent.load(file.download_url, function () {
+                        this.fileContent.load(file, function () {
                             self.preloading = false;
                         });
                     }
@@ -154,7 +155,8 @@ function makeFileListVue(meta, api, bus) {
 }
 
 function makeContentVue(meta, api, bus) {
-    var fileCache = lru(meta.cacheSize);
+    var renderedCache = lru(meta.cacheSize);
+    var contentStorage = Storage();
     var vue = new Vue({
         el: meta.fileContentEl,
         data: {
@@ -167,46 +169,50 @@ function makeContentVue(meta, api, bus) {
             message: meta.loadingMessage,
         },
         methods: {
-            load(url, callback, err_callback) {
-                var self = this;
-                var loaded = function (content) {
-                    fileCache.set(url, content);
-                    if (callback != undefined) {
-                        callback(content);
+            load(file, success_callback, err_callback) {
+                var fileHash = util.format("file:%s", file.sha);
+                var url = file.download_url;
+
+                var content;
+
+                var loaded = (data) => {
+                    renderedCache.set(fileHash, data);
+                    if (success_callback != undefined) {
+                        success_callback(data);
                     }
                 }
-                var content = fileCache.get(url);
-                if (content == undefined) {
-                    this.api.getFileContent(url, (content) => {
-                        loaded(renderMarkdown(content.trim()));
-                    }, (err) => {
-                        if (err_callback != undefined) {
-                            err_callback(err);
-                        }
-                    });
-                } else {
-                    loaded(content);
+                content = renderedCache.get(fileHash);
+                if (content !== undefined) {
+                    return loaded(content);
                 }
+
+                var fetched = (content) => {
+                    loaded(renderMarkdown(content.trim()));
+                }
+                content = contentStorage.get(fileHash);
+                if (content !== undefined) {
+                    return fetched(content);
+                }
+
+                this.api.getFileContent(url, (data) => {
+                    contentStorage.set(fileHash, data);
+                    fetched(data);
+                }, err_callback);
             },
             scrollToTop() {
                 this.$el.scrollTop = 0;
             },
             refresh(file) {
-                var oldFile = this.file;
                 this.file = file;
 
                 if (this.file == null) {
                     return;
                 }
 
-                if (oldFile != null && oldFile.download_url == this.file.download_url) {
-                    return;
-                }
-
                 var self = this;
                 self.loading = true;
                 self.message = meta.loadingMessage;
-                this.load(this.file.download_url, (content) => {
+                this.load(this.file, (content) => {
                     self.content = content;
                     self.loading = false;
                     self.message = "";
