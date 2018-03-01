@@ -1,25 +1,10 @@
-import marked from "marked"
-import highlight from "highlight.js"
-
-highlight.initHighlightingOnLoad();
-
-function renderer() {
-    var renderer = new marked.Renderer();
-    return renderer;
-}
-
-marked.setOptions({
-    gfm: true,
-    breaks: true,
-    renderer: renderer(),
-    highlight: function (code, lang) {
-        if (highlight.getLanguage(lang)) {
-            return highlight.highlight(lang, code, true).value;
-        }
-        return highlight.highlightAuto(code).value;
-    },
-});
+import MarkdownIt from 'markdown-it'
+import mkHighlight from 'markdown-it-highlightjs';
 
 export default function renderMarkdown(content) {
-    return marked(content);
+    var render = new MarkdownIt({
+        html: true,
+    });
+    render.use(mkHighlight);
+    return render.render(content);
 }
