@@ -1,6 +1,6 @@
-import util from "util"
-import path from "path"
-import ajaxGet from "./ajax"
+import util from "util";
+import path from "path";
+import ajaxGet from "./ajax";
 
 export default function API(meta) {
     var self = this;

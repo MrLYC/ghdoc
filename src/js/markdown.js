@@ -1,4 +1,4 @@
-import MarkdownIt from 'markdown-it'
+import MarkdownIt from 'markdown-it';
 import mkHighlight from 'markdown-it-highlightjs';
 
 export default function renderMarkdown(content) {

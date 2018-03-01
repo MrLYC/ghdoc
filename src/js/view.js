@@ -1,9 +1,9 @@
-import Vue from "vue"
-import util from "util"
-import path from "path"
-import lru from "lru-cache"
-import ghAPI from "./github_api"
-import renderMarkdown from "./markdown"
+import Vue from "vue";
+import util from "util";
+import path from "path";
+import lru from "lru-cache";
+import ghAPI from "./github_api";
+import renderMarkdown from "./markdown";
 
 
 function trimext (value) {

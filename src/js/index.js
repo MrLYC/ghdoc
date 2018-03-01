@@ -1,5 +1,5 @@
-import queryString from "query-string"
-import main from "./view"
+import queryString from "query-string";
+import main from "./view";
 
 const entryPrefix = "#/";
 var meta = Object.assign({
