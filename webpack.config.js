@@ -22,6 +22,10 @@ var plugins = [
         title: process.env.TITLE || 'Ghdoc',
         favicon: process.env.FAVICON || 'favicon.ico',
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+        async: true,
+        names: ["app"],
+    })
 ]
 if (!isDevEnv) {
     plugins.push(new MinifyPlugin());

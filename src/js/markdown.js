@@ -17,7 +17,7 @@ function getRender() {
     return render;
 }
 
-export default function renderMarkdown(content) {
+export function renderMarkdown(content) {
     var render = getRender();
     return render.render(content);
 }

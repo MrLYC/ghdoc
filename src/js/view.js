@@ -2,7 +2,6 @@ import Vue from "vue";
 import util from "util";
 import path from "path";
 import ghAPI from "./github_api";
-import renderMarkdown from "./markdown";
 import Storage from "./storage"
 
 
@@ -179,7 +178,9 @@ function makeContentVue(meta, api, bus) {
 
                 var fetched = (data) => {
                     if (success_callback != undefined) {
-                        success_callback(renderMarkdown(data));
+                        require(["./markdown"], function (markdown) {
+                            success_callback(markdown.renderMarkdown(data));
+                        });
                     }
                 }
                 content = contentCache.get(fileHash);
