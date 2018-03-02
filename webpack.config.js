@@ -1,16 +1,20 @@
 const path = require('path');
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const MinifyPlugin = require("babel-minify-webpack-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
+const isDevEnv = process.env.NODE_ENV === "development";
+
 const extractSass = new ExtractTextPlugin({
-    filename: "[name].style.css",
-    disable: process.env.NODE_ENV === "development"
+    filename: isDevEnv ? '[name].style.css' : '[name].min.css',
+    disable: isDevEnv,
 });
 
 var plugins = [
+    extractSass,
     new HtmlWebpackPlugin({
         filename: 'index.html',
         template: './src/html/index.html',
@@ -18,21 +22,20 @@ var plugins = [
         title: process.env.TITLE || 'Ghdoc',
         favicon: process.env.FAVICON || 'favicon.ico',
     }),
-    extractSass,
 ]
-if (process.env.NODE_ENV !== "development") {
+if (!isDevEnv) {
     plugins.push(new MinifyPlugin());
     plugins.push(new UglifyJsPlugin());
     plugins.push(new OptimizeCssAssetsPlugin());
 }
 
 module.exports = {
-    entry: [
-        './src/js/index.js',
-        './src/css/index.scss',
-    ],
+    entry: {
+        app: './src/js/index.js',
+        style: './src/css/index.scss',
+    },
     output: {
-        filename: 'bundle.js',
+        filename: isDevEnv ? '[name].bundle.js' : '[name].min.js',
         path: path.resolve(__dirname, 'dist')
     },
     devServer: {
