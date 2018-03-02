@@ -23,7 +23,7 @@ build-dev:
 
 .PHONY: dev-server
 dev-server:
-	${DEVNPM} run dev-server --hot
+	${DEVNPM} run dev-server --hot 
 
 .PHONY: info
 info:

@@ -6,14 +6,17 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const extractSass = new ExtractTextPlugin({
-    filename: "style.[contenthash].css",
+    filename: "[name].style.css",
     disable: process.env.NODE_ENV === "development"
 });
 
 var plugins = [
     new HtmlWebpackPlugin({
+        filename: 'index.html',
         template: './src/html/index.html',
         hash: true,
+        title: process.env.TITLE || 'Ghdoc',
+        favicon: process.env.FAVICON || 'favicon.ico',
     }),
     extractSass,
 ]
