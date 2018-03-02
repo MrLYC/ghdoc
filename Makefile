@@ -25,6 +25,10 @@ build-dev:
 dev-server:
 	${DEVNPM} run dev-server --hot
 
-.PHONY: display-modules
-display-modules:
-	webpack --display-modules --sort-modules-by size
+.PHONY: info
+info:
+	webpack --colors --profile --display-modules --sort-modules-by size
+
+.PHONY: profile
+profile:
+	webpack --profile --json > profile.json

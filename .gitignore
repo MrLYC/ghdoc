@@ -62,5 +62,6 @@ typings/
 .env
 
 dist/
+profile.json
 
 # End of https://www.gitignore.io/api/node
