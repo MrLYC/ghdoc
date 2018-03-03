@@ -1,4 +1,4 @@
-export function ajaxGet(url, success, error) {
+export default function ajaxGet(url, success, error) {
     var request = new XMLHttpRequest();
     request.open('GET', url, true);
 
