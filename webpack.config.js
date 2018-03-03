@@ -39,7 +39,7 @@ module.exports = {
         style: './src/css/index.scss',
     },
     output: {
-        filename: isDevEnv ? '[name].bundle.js' : '[name].min.js',
+        filename: isDevEnv ? '[name].bundle.js' : '[name].js',
         path: path.resolve(__dirname, 'dist')
     },
     devServer: {
